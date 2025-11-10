@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  padding: 10px 30px;
+  color: white;
+}
+
+.logo a {
+  font-size: 22px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+}
+
+.menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.menu li {
+  margin: 0 15px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.menu a:hover {
+  color: #ffcc00;
+}
+
+.user a {
+  text-decoration: none;
+  color: #fff;
+  margin-left: 15px;
+}
+
+.cart {
+  font-weight: bold;
+}
