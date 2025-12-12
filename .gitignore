@@ -1,0 +1,11 @@
+/.metadata/
+
+# Eclipse files
+/.classpath
+/.project
+/.settings/
+Servers2/
+*.launch
+
+# Maven build
+/target/

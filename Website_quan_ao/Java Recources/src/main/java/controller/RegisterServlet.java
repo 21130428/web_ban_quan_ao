@@ -36,8 +36,8 @@ public class RegisterServlet extends HttpServlet {
 					return;
 				}
 			}
-			String sql = "INSERT INTO users(fullName, email, password, phoneNumber, createAt, statusID, accountType, banned, failPassword)\r\n"
-					+ "VALUES (?, ?, ?, ?, NOW(), 1, 'USER', 0, 0)";
+			String sql = "INSERT INTO users(fullName, email, password, phoneNumber, createAt, statusID, activateCode, lockUntil, failPassword, accountType, banned)\r\n"
+					+ "VALUES (?, ?, ?, ?, NOW(), 1, null, null, 0, 0, 0)";
 			try (PreparedStatement ps = conn.prepareStatement(sql)) {
 				ps.setString(1, fullName);
 				ps.setString(2, email);
@@ -45,10 +45,11 @@ public class RegisterServlet extends HttpServlet {
 				ps.setString(4, phone);
 				ps.executeUpdate();
 			}
-			response.sendRedirect("log-in.jsp");
+			response.sendRedirect(request.getContextPath() + "/pages-user/log-in.jsp");
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.getWriter().print("Có lỗi xảy ra. Vui lòng thử lại!");
+			response.getWriter().print("Có lỗi xảy ra. Vui lòng thử lại111111111111!");
 		}
 	}
 }
