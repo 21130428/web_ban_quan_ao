@@ -49,7 +49,7 @@ public class RegisterServlet extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.getWriter().print("Có lỗi xảy ra. Vui lòng thử lại111111111111!");
+			response.getWriter().print("Có lỗi xảy ra. Vui lòng thử lại!");
 		}
 	}
 }
