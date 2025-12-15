@@ -1,0 +1,384 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<title>Sản phẩm hot | Shop Quần Áo</title>
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+	rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+body {
+	background: #f6f6f6;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: 250px 1fr;
+	gap: 20px;
+	padding: 20px;
+}
+
+/* ================= FAVORITE (HEART) ================= */
+.favorite {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: white;
+	padding: 8px;
+	border-radius: 50%;
+	cursor: pointer;
+	color: #ccc;
+	transition: all 0.3s ease;
+}
+
+.favorite:hover {
+	background: #e74c3c;
+	color: white;
+	transform: scale(1.15);
+	box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+}
+
+/* ================= BUTTON COMMON ================= */
+.btn {
+	transition: all 0.3s ease;
+}
+
+/* ================= ADD TO CART ================= */
+.btn-cart {
+	background: #2ecc71;
+	color: white;
+}
+
+.btn-cart:hover {
+	background: #27ae60;
+	transform: translateY(-3px);
+	box-shadow: 0 5px 15px rgba(46, 204, 113, 0.5);
+}
+
+/* ================= DETAIL BUTTON ================= */
+.btn-detail {
+	background: #3498db;
+	color: white;
+}
+
+.btn-detail:hover {
+	background: #2980b9;
+	transform: translateY(-3px);
+	box-shadow: 0 5px 15px rgba(52, 152, 219, 0.5);
+}
+
+/* ================= FILTER ================= */
+.filter {
+	background: white;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.filter h3 {
+	margin-bottom: 15px;
+}
+
+.filter-group {
+	margin-bottom: 20px;
+}
+
+.filter-group label {
+	display: block;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+
+/* ================= PRODUCTS ================= */
+.products {
+	background: white;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.products-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.products-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 20px;
+}
+
+.product-card {
+	background: #fff;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+	transition: transform 0.3s;
+}
+
+.product-img {
+	position: relative;
+}
+
+.product-img img {
+	width: 100%;
+	height: 280px;
+	object-fit: cover;
+}
+
+.favorite {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: white;
+	padding: 8px;
+	border-radius: 50%;
+	cursor: pointer;
+	color: #e74c3c;
+}
+
+.product-info {
+	padding: 15px;
+}
+
+.product-info h4 {
+	font-size: 16px;
+	margin-bottom: 5px;
+}
+
+.price {
+	color: #e67e22;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+.btn-group {
+	display: flex;
+	gap: 10px;
+}
+
+.btn {
+	flex: 1;
+	padding: 8px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.btn-cart {
+	background: #2ecc71;
+	color: white;
+}
+
+.btn-detail {
+	background: #3498db;
+	color: white;
+}
+
+/* ================= PRODUCTS HEADER ================= */
+.products-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 25px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #eee;
+}
+
+/* TITLE */
+.products-header h2 {
+	font-size: 22px;
+	font-weight: 600;
+	color: #333;
+	position: relative;
+}
+
+/* underline nhẹ cho tiêu đề */
+.products-header h2::after {
+	content: "";
+	width: 60px;
+	height: 3px;
+	background: #e67e22;
+	position: absolute;
+	left: 0;
+	bottom: -8px;
+	border-radius: 2px;
+}
+
+/* ================= SORT SELECT ================= */
+.products-header select {
+	padding: 8px 15px;
+	border-radius: 20px;
+	border: 1px solid #ddd;
+	font-size: 14px;
+	cursor: pointer;
+	background: #fff;
+	outline: none;
+	transition: all 0.3s ease;
+}
+
+/* hover */
+.products-header select:hover {
+	border-color: #3498db;
+}
+
+/* focus */
+.products-header select:focus {
+	border-color: #3498db;
+	box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+</style>
+</head>
+<body>
+	<jsp:include page="/user-pages/navbar.jsp" />
+	<div class="container">
+
+		<!-- ================= FILTER ================= -->
+		<aside class="filter">
+			<h3>Lọc sản phẩm</h3>
+
+			<div class="filter-group">
+				<strong>Loại</strong> <label><input type="checkbox">
+					Áo thun</label> <label><input type="checkbox"> Áo sơ mi</label> <label><input
+					type="checkbox"> Quần jean</label> <label><input
+					type="checkbox"> Váy</label>
+			</div>
+
+			<div class="filter-group">
+				<strong>Giới tính</strong> <label><input type="radio"
+					name="gender"> Nam</label> <label><input type="radio"
+					name="gender"> Nữ</label> <label><input type="radio"
+					name="gender"> Unisex</label>
+			</div>
+
+			<div class="filter-group">
+				<strong>Khoảng giá</strong> <label><input type="checkbox">
+					Dưới 200k</label> <label><input type="checkbox"> 200k -
+					500k</label> <label><input type="checkbox"> Trên 500k</label>
+			</div>
+		</aside>
+
+		<!-- ================= PRODUCTS ================= -->
+		<section class="products">
+			<div class="products-header">
+				<h2 style="color: red;">SẢN PHẨM HOT</h2>
+				<select>
+					<option>Mới nhất</option>
+					<option>Giá tăng dần</option>
+					<option>Giá giảm dần</option>
+					<option>Bán chạy</option>
+				</select>
+			</div>
+
+			<div class="products-grid">
+
+				<!-- PRODUCT -->
+				<div class="product-card">
+					<div class="product-img">
+						<img
+							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/ao-thun.jpg"
+							alt="Áo thun">
+						<div class="favorite">
+							<i class="fa-solid fa-heart"></i>
+						</div>
+					</div>
+					<div class="product-info">
+						<h4>Áo thun basic</h4>
+						<div class="price">199.000đ</div>
+						<div class="btn-group">
+							<button class="btn btn-cart">
+								<i class="fa-solid fa-cart-shopping"></i>
+							</button>
+							<button class="btn btn-detail" type="button"
+								onclick="window.location.href='${pageContext.request.contextPath}/user-pages/product-detail.jsp'">Chi
+								tiết</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- COPY thêm nhiều product-card -->
+				<div class="product-card">
+					<div class="product-img">
+						<img
+							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/quan-jean.jpg"
+							alt="Quần jean">
+						<div class="favorite">
+							<i class="fa-solid fa-heart"></i>
+						</div>
+					</div>
+					<div class="product-info">
+						<h4>Quần jean nam</h4>
+						<div class="price">399.000đ</div>
+						<div class="btn-group">
+							<button class="btn btn-cart">
+								<i class="fa-solid fa-cart-shopping"></i>
+							</button>
+							<button class="btn btn-detail">Chi tiết</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="product-card">
+					<div class="product-img">
+						<img
+							src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/ao-croptop.jpg"
+							alt="Áo croptop">
+						<div class="favorite">
+							<i class="fa-solid fa-heart"></i>
+						</div>
+					</div>
+					<div class="product-info">
+						<h4>Áo croptop</h4>
+						<div class="price">399.000đ</div>
+						<div class="btn-group">
+							<button class="btn btn-cart">
+								<i class="fa-solid fa-cart-shopping"></i>
+							</button>
+							<button class="btn btn-detail">Chi tiết</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="product-card">
+					<div class="product-img">
+						<img
+							src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/vay-yem.jpg"
+							alt="Váy yếm">
+						<div class="favorite">
+							<i class="fa-solid fa-heart"></i>
+						</div>
+					</div>
+					<div class="product-info">
+						<h4>Váy yếm</h4>
+						<div class="price">599.000đ</div>
+						<div class="btn-group">
+							<button class="btn btn-cart">
+								<i class="fa-solid fa-cart-shopping"></i>
+							</button>
+							<button class="btn btn-detail">Chi tiết</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+	</div>
+	<jsp:include page="/user-pages/footer.jsp" />
+</body>
+</html>
