@@ -30,4 +30,54 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProductController</display-name>
+    <servlet-name>ProductController</servlet-name>
+    <servlet-class>controller.ProductController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductController</servlet-name>
+    <url-pattern>/ProductController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MaleColthesController</display-name>
+    <servlet-name>MaleColthesController</servlet-name>
+    <servlet-class>controller.MaleColthesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MaleColthesController</servlet-name>
+    <url-pattern>/MaleColthesController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FemaleClothesController</display-name>
+    <servlet-name>FemaleClothesController</servlet-name>
+    <servlet-class>controller.FemaleClothesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FemaleClothesController</servlet-name>
+    <url-pattern>/FemaleClothesController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>JewelryController</display-name>
+    <servlet-name>JewelryController</servlet-name>
+    <servlet-class>controller.JewelryController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JewelryController</servlet-name>
+    <url-pattern>/JewelryController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProductDetailController</display-name>
+    <servlet-name>ProductDetailController</servlet-name>
+    <servlet-class>controller.ProductDetailController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductDetailController</servlet-name>
+    <url-pattern>/ProductDetailController</url-pattern>
+  </servlet-mapping>
 </web-app>

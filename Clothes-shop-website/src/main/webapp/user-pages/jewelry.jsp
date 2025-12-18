@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <html lang="vi">
 <head>
 <title>Trang sức| Shop Quần Áo</title>
@@ -250,134 +252,137 @@ body {
 
 		<!-- ================= FILTER ================= -->
 		<aside class="filter">
-			<h3>Trang sức</h3>
-
-			<!-- LOẠI TRANG SỨC -->
-			<div class="filter-group">
-				<strong>Loại trang sức</strong> <label><input
-					type="checkbox"> Nhẫn</label> <label><input type="checkbox">
-					Dây chuyền</label> <label><input type="checkbox"> Vòng tay</label>
-				<label><input type="checkbox"> Lắc tay</label> <label><input
-					type="checkbox"> Bông tai</label> <label><input
-					type="checkbox"> Đồng hồ</label>
-			</div>
-
-			<!-- ĐỐI TƯỢNG -->
-			<div class="filter-group">
-				<strong>Đối tượng</strong> <label><input type="checkbox">
-					Nam</label> <label><input type="checkbox"> Nữ</label> <label><input
-					type="checkbox"> Unisex</label>
-			</div>
-
-			<!-- CHẤT LIỆU -->
-			<div class="filter-group">
-				<strong>Chất liệu</strong> <label><input type="checkbox">
-					Vàng</label> <label><input type="checkbox"> Bạc</label> <label><input
-					type="checkbox"> Titan</label> <label><input
-					type="checkbox"> Thép không gỉ</label> <label><input
-					type="checkbox"> Đá quý</label>
-			</div>
-
-			<!-- MÀU -->
-			<div class="filter-group">
-				<strong>Màu sắc</strong> <label><input type="checkbox">
-					Vàng</label> <label><input type="checkbox"> Bạc</label> <label><input
-					type="checkbox"> Đen</label> <label><input type="checkbox">
-					Trắng</label> <label><input type="checkbox"> Hồng</label>
-			</div>
-
-			<!-- GIÁ -->
-			<div class="filter-group">
-				<strong>Khoảng giá</strong> <label><input type="checkbox">
-					Dưới 500.000đ</label> <label><input type="checkbox">
-					500.000đ – 2.000.000đ</label> <label><input type="checkbox">
-					Trên 2.000.000đ</label>
-			</div>
+		    <h3>Trang sức</h3>
+		
+		    <div class="filter-group">
+		        <strong>Loại trang sức</strong> 
+		        <label><input type="checkbox" class="filter-type" value="Nhẫn"> Nhẫn</label> 
+		        <label><input type="checkbox" class="filter-type" value="Dây chuyền"> Dây chuyền</label> 
+		        <label><input type="checkbox" class="filter-type" value="Vòng tay"> Vòng tay</label>
+		        <label><input type="checkbox" class="filter-type" value="Lắc tay"> Lắc tay</label> 
+		        <label><input type="checkbox" class="filter-type" value="Bông tai"> Bông tai</label> 
+		        <label><input type="checkbox" class="filter-type" value="Đồng hồ"> Đồng hồ</label>
+		    </div>
+		
+		    <div class="filter-group">
+		        <strong>Đối tượng</strong> 
+		        <label><input type="checkbox" class="filter-target" value="NAM"> Nam</label> 
+		        <label><input type="checkbox" class="filter-target" value="NU"> Nữ</label> 
+		        <label><input type="checkbox" class="filter-target" value="UNISEX"> Unisex</label>
+		    </div>
+		
+		    <div class="filter-group">
+		        <strong>Chất liệu</strong> 
+		        <label><input type="checkbox" class="filter-material" value="Vàng"> Vàng</label> 
+		        <label><input type="checkbox" class="filter-material" value="Bạc"> Bạc</label> 
+		        <label><input type="checkbox" class="filter-material" value="Titan"> Titan</label> 
+		        <label><input type="checkbox" class="filter-material" value="Thép không gỉ"> Thép không gỉ</label> 
+		        <label><input type="checkbox" class="filter-material" value="Đá quý"> Đá quý</label>
+		    </div>
+		
+		    <div class="filter-group">
+		        <strong>Khoảng giá</strong> 
+		        <label><input type="checkbox" class="filter-price" value="0-500000"> Dưới 500k</label> 
+		        <label><input type="checkbox" class="filter-price" value="500000-2000000"> 500k – 2tr</label> 
+		        <label><input type="checkbox" class="filter-price" value="2000000-999999999"> Trên 2tr</label>
+		    </div>
 		</aside>
-
 		<!-- ================= PRODUCTS ================= -->
 		<section class="products">
-			<div class="products-header">
-				<h2>TRANG SỨC NAM & NỮ</h2>
-				<select>
-					<option>Mới nhất</option>
-					<option>Giá tăng dần</option>
-					<option>Giá giảm dần</option>
-					<option>Bán chạy</option>
-				</select>
-			</div>
-
-			<div class="products-grid">
-
-				<!-- PRODUCT -->
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Female/Trang_suc_nu/day-chuyen.jpg"
-							alt="Dây chuyền bạc">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Dây chuyền bạc Unisex</h4>
-						<div class="price">1.299.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Female/Trang_suc_nu/nhan.jpg"
-							alt="Nhẫn bạc nam">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Nhẫn bạc nam</h4>
-						<div class="price">899.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Female/Trang_suc_nu/bong-tai-2.jpg"
-							alt="Bông tai nữ">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Bông tai nữ đính đá</h4>
-						<div class="price">1.499.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
-
-			</div>
+		    <div class="products-grid">
+		        <%-- Lặp qua danh sách trang sức từ Servlet --%>
+			    <c:forEach items="${listP}" var="p">
+			        <div class="product-card" 
+			             data-type="${p.categoryName}" 
+			             data-target="${p.target}" 
+			             data-material="${p.material}" 
+			             data-price="${p.price}">
+			            
+			            <div class="product-img">
+			                <%-- Đường dẫn đồng bộ với thư mục uploaded-images --%>
+			                <img src="${pageContext.request.contextPath}/assets/uploaded-images/${p.imageUrl}" 
+			                     alt="${p.name}">
+			                <div class="favorite">
+			                    <i class="fa-solid fa-heart"></i>
+			                </div>
+			            </div>
+			            <div class="product-info">
+			                <h4>${p.name}</h4>
+			                <div class="price">
+			                    <fmt:formatNumber value="${p.price}" pattern="#,###" />đ
+			                </div>
+			                <div class="btn-group">
+			                    <button class="btn btn-cart">
+			                        <i class="fa-solid fa-cart-shopping"></i>
+			                    </button>
+			                    <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}" class="btn btn-detail">
+								    Chi tiết
+								</a>
+			                </div>
+			            </div>
+			        </div>
+			    </c:forEach>
+			    <%-- Thông báo nếu không có sản phẩm --%>
+			    <c:if test="${empty listP}">
+			        <div class="text-center w-100 py-5">
+			            <p class="text-muted">Hiện chưa có mẫu trang sức nào được cập nhật.</p>
+			        </div>
+			    </c:if>
+		        
+		    </div>
 		</section>
-
-
 	</div>
 	<jsp:include page="/user-pages/footer.jsp" />
+	
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const checkboxes = document.querySelectorAll('.filter-group input[type="checkbox"]');
+    const products = document.querySelectorAll(".product-card");
+
+    checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", filterProducts);
+    });
+
+    function filterProducts() {
+        // Thu thập các mảng giá trị đang được chọn
+        const selectedTypes = getSelected(".filter-type");
+        const selectedTargets = getSelected(".filter-target");
+        const selectedMaterials = getSelected(".filter-material");
+        const selectedColors = getSelected(".filter-color");
+        const selectedPrices = getSelected(".filter-price");
+
+        products.forEach((product) => {
+            const pType = product.getAttribute("data-type");
+            const pTarget = product.getAttribute("data-target");
+            const pMaterial = product.getAttribute("data-material");
+            const pColor = product.getAttribute("data-color");
+            const pPrice = parseFloat(product.getAttribute("data-price"));
+
+            // Kiểm tra từng điều kiện (Nếu mảng rỗng thì mặc định là true)
+            const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(pType);
+            const targetMatch = selectedTargets.length === 0 || selectedTargets.includes(pTarget);
+            const materialMatch = selectedMaterials.length === 0 || selectedMaterials.includes(pMaterial);
+            const colorMatch = selectedColors.length === 0 || selectedColors.includes(pColor);
+            
+            let priceMatch = selectedPrices.length === 0;
+            selectedPrices.forEach(range => {
+                const [min, max] = range.split("-").map(Number);
+                if (pPrice >= min && pPrice <= max) priceMatch = true;
+            });
+
+            // Hiển thị nếu thỏa mãn TẤT CẢ nhóm lọc (AND)
+            if (typeMatch && targetMatch && materialMatch && colorMatch && priceMatch) {
+                product.style.display = ""; 
+            } else {
+                product.style.display = "none";
+            }
+        });
+    }
+
+    function getSelected(selector) {
+        return Array.from(document.querySelectorAll(selector + ":checked")).map(cb => cb.value);
+    }
+});
+</script>
 </body>
 </html>

@@ -1,6 +1,0 @@
-config\DBConnect.class
-controller\AdminProductServlet.class
-controller\RegisterServlet.class
-dao\ProductDAO.class
-model\Product.class
-model\User.class

@@ -89,9 +89,9 @@
                 <a href="${pageContext.request.contextPath}/user-pages/hot.jsp">Sản phẩm</a>
                 <div class="dropdown">
                 	<a href="${pageContext.request.contextPath}/user-pages/hot.jsp" style="color: red">Hot</a>
-                    <a href="${pageContext.request.contextPath}/user-pages/male-clothe.jsp">Quần áo nam</a>
-                    <a href="${pageContext.request.contextPath}/user-pages/female-clothe.jsp">Quần áo nữ</a>
-                    <a href="${pageContext.request.contextPath}/user-pages/jewelry.jsp">Trang sức</a>
+                    <a href="${pageContext.request.contextPath}/male-clothes">Quần áo nam</a>
+                    <a href="${pageContext.request.contextPath}/female-clothes">Quần áo nữ</a>
+                    <a href="${pageContext.request.contextPath}/jewelry">Trang sức</a>
                 </div>
             </li>
             <li><a href="${pageContext.request.contextPath}/user-pages/event.jsp">Thông báo</a></li>

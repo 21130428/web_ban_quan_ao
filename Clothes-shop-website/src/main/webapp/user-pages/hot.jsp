@@ -250,45 +250,39 @@ body {
 
 		<!-- ================= FILTER ================= -->
 		<aside class="filter">
-			<h3>Lọc sản phẩm</h3>
-
-			<div class="filter-group">
-				<strong>Loại</strong> <label><input type="checkbox">
-					Áo thun</label> <label><input type="checkbox"> Áo sơ mi</label> <label><input
-					type="checkbox"> Quần jean</label> <label><input
-					type="checkbox"> Váy</label>
-			</div>
-
-			<div class="filter-group">
-				<strong>Giới tính</strong> <label><input type="radio"
-					name="gender"> Nam</label> <label><input type="radio"
-					name="gender"> Nữ</label> <label><input type="radio"
-					name="gender"> Unisex</label>
-			</div>
-
-			<div class="filter-group">
-				<strong>Khoảng giá</strong> <label><input type="checkbox">
-					Dưới 200k</label> <label><input type="checkbox"> 200k -
-					500k</label> <label><input type="checkbox"> Trên 500k</label>
-			</div>
+		    <h3>Lọc sản phẩm</h3>
+		
+		    <div class="filter-group">
+		        <strong>Loại</strong> 
+		        <label><input type="checkbox" class="filter-type" value="Áo thun"> Áo thun</label> 
+		        <label><input type="checkbox" class="filter-type" value="Áo sơ mi"> Áo sơ mi</label> 
+		        <label><input type="checkbox" class="filter-type" value="Quần jean"> Quần jean</label> 
+		        <label><input type="checkbox" class="filter-type" value="Váy"> Váy</label>
+		    </div>
+		
+		    <div class="filter-group">
+		        <strong>Giới tính</strong> 
+		        <label><input type="radio" name="gender" class="filter-gender" value="NAM"> Nam</label> 
+		        <label><input type="radio" name="gender" class="filter-gender" value="NU"> Nữ</label> 
+		        <label><input type="radio" name="gender" class="filter-gender" value="UNISEX"> Unisex</label>
+		        <label><input type="radio" name="gender" class="filter-gender" value="all" checked> Tất cả</label>
+		    </div>
+		
+		    <div class="filter-group">
+		        <strong>Khoảng giá</strong> 
+		        <label><input type="checkbox" class="filter-price" value="0-200000"> Dưới 200k</label> 
+		        <label><input type="checkbox" class="filter-price" value="200000-500000"> 200k - 500k</label> 
+		        <label><input type="checkbox" class="filter-price" value="500000-999999999"> Trên 500k</label>
+		    </div>
 		</aside>
 
 		<!-- ================= PRODUCTS ================= -->
 		<section class="products">
-			<div class="products-header">
-				<h2 style="color: red;">SẢN PHẨM HOT</h2>
-				<select>
-					<option>Mới nhất</option>
-					<option>Giá tăng dần</option>
-					<option>Giá giảm dần</option>
-					<option>Bán chạy</option>
-				</select>
-			</div>
 
 			<div class="products-grid">
 
 				<!-- PRODUCT -->
-				<div class="product-card">
+				<div class="product-card" data-type="Áo thun" data-gender="NAM" data-price="199000">
 					<div class="product-img">
 						<img
 							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/ao-thun.jpg"
@@ -312,7 +306,7 @@ body {
 				</div>
 
 				<!-- COPY thêm nhiều product-card -->
-				<div class="product-card">
+				<div class="product-card" data-type="Quần jean" data-gender="NAM" data-price="399000">
 					<div class="product-img">
 						<img
 							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/quan-jean.jpg"
@@ -333,52 +327,57 @@ body {
 					</div>
 				</div>
 
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/ao-croptop.jpg"
-							alt="Áo croptop">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Áo croptop</h4>
-						<div class="price">399.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/vay-yem.jpg"
-							alt="Váy yếm">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Váy yếm</h4>
-						<div class="price">599.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
-
 			</div>
 		</section>
 
 	</div>
 	<jsp:include page="/user-pages/footer.jsp" />
+	
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const filters = document.querySelectorAll('.filter-group input');
+    const products = document.querySelectorAll(".product-card");
+
+    filters.forEach((input) => {
+        input.addEventListener("change", filterProducts);
+    });
+
+    function filterProducts() {
+        // 1. Thu thập dữ liệu từ các bộ lọc
+        const selectedTypes = Array.from(document.querySelectorAll(".filter-type:checked")).map(cb => cb.value);
+        const selectedPrices = Array.from(document.querySelectorAll(".filter-price:checked")).map(cb => cb.value);
+        
+        // Lấy giá trị radio gender đang chọn
+        const genderRadio = document.querySelector(".filter-gender:checked");
+        const selectedGender = genderRadio ? genderRadio.value : "all";
+
+        products.forEach((product) => {
+            const pType = product.getAttribute("data-type");
+            const pGender = product.getAttribute("data-gender");
+            const pPrice = parseFloat(product.getAttribute("data-price"));
+
+            // Logic kiểm tra Loại (Nếu không chọn cái nào thì hiện tất cả)
+            const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(pType);
+
+            // Logic kiểm tra Giới tính
+            const genderMatch = selectedGender === "all" || pGender === selectedGender;
+
+            // Logic kiểm tra Giá
+            let priceMatch = selectedPrices.length === 0;
+            selectedPrices.forEach(range => {
+                const [min, max] = range.split("-").map(Number);
+                if (pPrice >= min && pPrice <= max) priceMatch = true;
+            });
+
+            // HIỂN THỊ: Sản phẩm phải khớp TẤT CẢ các điều kiện (AND)
+            if (typeMatch && genderMatch && priceMatch) {
+                product.style.display = ""; 
+            } else {
+                product.style.display = "none";
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>

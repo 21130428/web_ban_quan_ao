@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -68,38 +70,6 @@ body {
 .option-group strong {
 	display: block;
 	margin-bottom: 8px;
-}
-
-/* COLORS */
-.colors span {
-	display: inline-block;
-	width: 28px;
-	height: 28px;
-	border-radius: 50%;
-	margin-right: 8px;
-	cursor: pointer;
-	border: 2px solid transparent;
-}
-
-.colors span:hover {
-	border-color: #333;
-}
-
-.black {
-	background: #000;
-}
-
-.white {
-	background: #fff;
-	border: 1px solid #ccc;
-}
-
-.red {
-	background: #e74c3c;
-}
-
-.blue {
-	background: #3498db;
 }
 
 /* SIZES */
@@ -312,57 +282,64 @@ body {
 
 		<!-- ================= PRODUCT DETAIL ================= -->
 		<div class="product-detail">
-			<div class="product-image">
-				<img
-					src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/ao-thun.jpg"
-					alt="Áo thun basic">
-			</div>
-
-			<div class="product-info">
-				<h1>Áo thun basic</h1>
-				<div class="price">199.000đ</div>
-
-				<p class="desc">Áo thun basic form rộng, chất cotton mềm mịn,
-					phù hợp mặc hằng ngày hoặc phối nhiều phong cách khác nhau.</p>
-
-				<!-- COLOR -->
-				<div class="option-group">
-					<strong>Màu sắc</strong>
-					<div class="colors">
-						<span class="black"></span> <span class="white"></span> <span
-							class="red"></span> <span class="blue"></span>
-					</div>
-				</div>
-
-				<!-- SIZE -->
-				<div class="option-group">
-					<strong>Kích cỡ</strong>
-					<div class="sizes">
-						<span>S</span> <span>M</span> <span>L</span> <span>XL</span>
-					</div>
-				</div>
-
-				<!-- QUANTITY -->
-				<div class="option-group">
-					<strong>Số lượng</strong>
-					<div class="quantity">
-						<button>-</button>
-						<input type="text" value="1">
-						<button>+</button>
-					</div>
-				</div>
-
-				<!-- ACTIONS -->
-				<div class="actions">
-					<button class="btn btn-cart">
-						<i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
-					</button>
-
-					<button class="btn btn-fav">
-						<i class="fa-solid fa-heart"></i> Yêu thích
-					</button>
-				</div>
-			</div>
+		    <div class="product-image">
+		        <img src="${pageContext.request.contextPath}/assets/uploaded-images/${p.imageUrl}" 
+		             alt="${p.name}">
+		    </div>
+		
+		    <div class="product-info">
+		        <h1>${p.name}</h1>
+		        <div class="price">
+		            <fmt:formatNumber value="${p.price}" pattern="#,###" />đ
+		        </div>
+		
+		        <p class="desc">
+		            ${p.description != null ? p.description : "Sản phẩm chất lượng cao, thiết kế hiện đại phù hợp với nhiều phong cách."}
+		        </p>
+		
+		        <hr>
+		
+		        <div class="option-group">
+		            <strong>Màu sắc: </strong> <span>${p.color}</span>
+		        </div>
+		
+		        <c:if test="${p.categoryId == 1 || p.categoryId == 2}">
+		            <div class="option-group">
+		                <strong>Kích cỡ hiện có:</strong>
+		                <div class="sizes">
+		                    <span class="active">${p.size}</span>
+		                </div>
+		                <small class="text-muted">(Sản phẩm này hiện có size ${p.size})</small>
+		            </div>
+		        </c:if>
+		
+		        <c:if test="${p.categoryId == 3}">
+		            <div class="option-group">
+		                <strong>Chất liệu:</strong> <span>${p.material}</span>
+		            </div>
+		            <div class="option-group">
+		                <strong>Đối tượng:</strong> <span>${p.target}</span>
+		            </div>
+		        </c:if>
+		
+		        <div class="option-group">
+		            <strong>Số lượng</strong>
+		            <div class="quantity">
+		                <button type="button" onclick="changeQty(-1)">-</button>
+		                <input type="text" id="qtyInput" value="1" readonly>
+		                <button type="button" onclick="changeQty(1)">+</button>
+		            </div>
+		        </div>
+		
+		        <div class="actions">
+		            <button class="btn btn-cart">
+		                <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
+		            </button>
+		            <button class="btn btn-fav">
+		                <i class="fa-solid fa-heart"></i> Yêu thích
+		            </button>
+		        </div>
+		    </div>
 		</div>
 
 		<!-- ================= REVIEWS ================= -->
@@ -468,5 +445,14 @@ body {
 
 	</div>
 	<jsp:include page="/user-pages/footer.jsp" />
+	
+<script>
+    function changeQty(step) {
+        let input = document.getElementById('qtyInput');
+        let val = parseInt(input.value) + step;
+        if (val < 1) val = 1;
+        input.value = val;
+    }
+</script>
 </body>
 </html>

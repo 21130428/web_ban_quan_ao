@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <html lang="vi">
 <head>
 <title>Sản phẩm nam| Shop Quần Áo</title>
@@ -254,135 +256,126 @@ body {
 
 			<!-- LOẠI SẢN PHẨM -->
 			<div class="filter-group">
-				<strong>Loại sản phẩm</strong> <label><input type="checkbox">
-					Áo thun</label> <label><input type="checkbox"> Áo sơ mi</label> <label><input
-					type="checkbox"> Áo khoác</label> <label><input
-					type="checkbox"> Quần jean</label> <label><input
-					type="checkbox"> Quần tây</label> <label><input
-					type="checkbox"> Quần short</label>
+				<strong>Loại sản phẩm</strong> 
+				<label><input type="checkbox" class="filter-type" value="Áo thun">Áo thun</label> 
+				<label><input type="checkbox" class="filter-type" value="Áo sơ mi">Áo sơ mi</label> 
+				<label><input type="checkbox" class="filter-type" value="Áo khoác">Áo khoác</label> 
+				<label><input type="checkbox" class="filter-type" value="Quần jean">Quần jean</label> 
+				<label><input type="checkbox" class="filter-type" value="Quần tây">Quần tây</label> 
+				<label><input type="checkbox" class="filter-type" value="Quần short">Quần short</label>
 			</div>
 
 			<!-- SIZE -->
 			<div class="filter-group">
-				<strong>Kích cỡ</strong> <label><input type="checkbox">
-					S</label> <label><input type="checkbox"> M</label> <label><input
-					type="checkbox"> L</label> <label><input type="checkbox">
-					XL</label> <label><input type="checkbox"> XXL</label>
+				<strong>Kích cỡ</strong> 
+				<label><input type="checkbox" class="filter-size" value="S">S</label> 
+				<label><input type="checkbox" class="filter-size" value="M">M</label> 
+				<label><input type="checkbox" class="filter-size" value="L">L</label> 
+				<label><input type="checkbox" class="filter-size" value="XL">XL</label> 
+				<label><input type="checkbox" class="filter-size" value="XXL">XXL</label>
 			</div>
 
 			<!-- GIÁ -->
 			<div class="filter-group">
-				<strong>Khoảng giá</strong> <label><input type="checkbox">
-					Dưới 200.000đ</label> <label><input type="checkbox">
-					200.000đ – 500.000đ</label> <label><input type="checkbox">
-					Trên 500.000đ</label>
+				<strong>Khoảng giá</strong> 
+				<label><input type="checkbox" class="filter-price" value="0-200000">Dưới 200.000đ</label> 
+				<label><input type="checkbox" class="filter-price" value="200000-500000">200.000đ – 500.000đ</label> 
+				<label><input type="checkbox" class="filter-price" value="500000-999999999">Trên 500.000đ</label>
 			</div>
 		</aside>
 
 
 		<!-- ================= PRODUCTS ================= -->
 		<section class="products">
-			<div class="products-header">
-				<h2>QUẦN ÁO NAM</h2>
-				<select>
-					<option>Mới nhất</option>
-					<option>Giá tăng dần</option>
-					<option>Giá giảm dần</option>
-					<option>Bán chạy</option>
-				</select>
-			</div>
 
 			<div class="products-grid">
 
 				<!-- PRODUCT -->
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/ao-thun.jpg"
-							alt="Áo thun">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Áo thun basic</h4>
-						<div class="price">199.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
+                <c:forEach items="${listP}" var="p">
+                    <div class="product-card" 
+                         data-type="${p.categoryName}" 
+                         data-size="${p.size}" 
+                         data-price="${p.price}">
+                        
+                        <div class="product-img">
+                            <%-- Đường dẫn ảnh động dựa trên dữ liệu từ Database --%>
+                            <img src="${pageContext.request.contextPath}/assets/uploaded-images/${p.imageUrl}" 
+                                 alt="${p.name}">
+                            <div class="favorite">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="product-info">
+                            <h4>${p.name}</h4>
+                            <div class="price">
+                                <%-- Định dạng tiền tệ: 500000 -> 500,000 --%>
+                                <fmt:formatNumber value="${p.price}" pattern="#,###" />đ
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </button>
+                               <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}" class="btn btn-detail">
+								    Chi tiết
+								</a>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
 
-				<!-- COPY thêm nhiều product-card -->
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/quan-jean.jpg"
-							alt="Quần jean">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Quần jean nam</h4>
-						<div class="price">399.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-cardigan.jpg"
-							alt="Áo cardigan">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Áo cardigan</h4>
-						<div class="price">399.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-vest.jpg"
-							alt="Áo vest">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Áo vest</h4>
-						<div class="price">399.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
+                <!-- Hiển thị khi không có sản phẩm -->
+                <c:if test="${empty listP}">
+                    <div class="text-center w-100 py-5">
+                        <p class="text-muted">Hiện tại chưa có sản phẩm nào thuộc mục này.</p>
+                    </div>
+                </c:if>
+				
 			</div>
 		</section>
 
 	</div>
 	<jsp:include page="/user-pages/footer.jsp" />
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+	    // Lấy tất cả checkbox và các card sản phẩm
+	    const checkboxes = document.querySelectorAll('.filter-group input[type="checkbox"]');
+	    const products = document.querySelectorAll(".product-card");
+
+	    checkboxes.forEach((checkbox) => {
+	        checkbox.addEventListener("change", filterProducts);
+	    });
+
+	    function filterProducts() {
+	        // Lấy mảng các giá trị được chọn
+	        const selectedTypes = Array.from(document.querySelectorAll(".filter-type:checked")).map(cb => cb.value);
+	        const selectedSizes = Array.from(document.querySelectorAll(".filter-size:checked")).map(cb => cb.value);
+	        const selectedPrices = Array.from(document.querySelectorAll(".filter-price:checked")).map(cb => cb.value);
+
+	        products.forEach((product) => {
+	            const pType = product.getAttribute("data-type");
+	            const pSize = product.getAttribute("data-size");
+	            const pPrice = parseFloat(product.getAttribute("data-price"));
+
+	            // Kiểm tra: Nếu không chọn gì ở nhóm đó thì coi như thỏa mãn (Match = true)
+	            const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(pType);
+	            const sizeMatch = selectedSizes.length === 0 || selectedSizes.includes(pSize);
+	            
+	            let priceMatch = selectedPrices.length === 0;
+	            selectedPrices.forEach(range => {
+	                const [min, max] = range.split("-").map(Number);
+	                if (pPrice >= min && pPrice <= max) priceMatch = true;
+	            });
+
+	            // Hiển thị sản phẩm nếu thỏa mãn ĐỒNG THỜI cả 3 bộ lọc
+	            if (typeMatch && sizeMatch && priceMatch) {
+	                product.style.display = ""; // Để trống để nhận lại giá trị CSS mặc định (grid/block)
+	            } else {
+	                product.style.display = "none";
+	            }
+	        });
+	    }
+	});
+</script>
 </body>
 </html>

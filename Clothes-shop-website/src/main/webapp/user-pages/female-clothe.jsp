@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <html lang="vi">
 <head>
 <title>Sản phẩm nữ | Shop Quần Áo</title>
@@ -252,148 +254,138 @@ body {
 		<aside class="filter">
 			<h3>Thời trang nữ</h3>
 
-			<!-- LOẠI SẢN PHẨM -->
 			<div class="filter-group">
-				<strong>Loại sản phẩm</strong> <label><input type="checkbox">
-					Áo thun</label> <label><input type="checkbox"> Áo sơ mi</label> <label><input
-					type="checkbox"> Áo kiểu</label> <label><input
-					type="checkbox"> Áo khoác</label> <label><input
-					type="checkbox"> Váy</label> <label><input type="checkbox">
-					Chân váy</label> <label><input type="checkbox"> Quần jean</label> <label><input
-					type="checkbox"> Quần short</label>
+				<strong>Loại sản phẩm</strong> <label><input type="checkbox"
+					class="filter-type" value="Áo thun"> Áo thun</label> <label><input
+					type="checkbox" class="filter-type" value="Áo sơ mi"> Áo sơ
+					mi</label> <label><input type="checkbox" class="filter-type"
+					value="Áo kiểu"> Áo kiểu</label> <label><input
+					type="checkbox" class="filter-type" value="Áo khoác"> Áo
+					khoác</label> <label><input type="checkbox" class="filter-type"
+					value="Váy"> Váy</label> <label><input type="checkbox"
+					class="filter-type" value="Chân váy"> Chân váy</label> <label><input
+					type="checkbox" class="filter-type" value="Quần jean"> Quần
+					jean</label> <label><input type="checkbox" class="filter-type"
+					value="Quần short"> Quần short</label>
 			</div>
 
-			<!-- SIZE -->
 			<div class="filter-group">
-				<strong>Kích cỡ</strong> <label><input type="checkbox">
-					XS</label> <label><input type="checkbox"> S</label> <label><input
-					type="checkbox"> M</label> <label><input type="checkbox">
-					L</label> <label><input type="checkbox"> XL</label>
+				<strong>Kích cỡ</strong> <label><input type="checkbox"
+					class="filter-size" value="XS"> XS</label> <label><input
+					type="checkbox" class="filter-size" value="S"> S</label> <label><input
+					type="checkbox" class="filter-size" value="M"> M</label> <label><input
+					type="checkbox" class="filter-size" value="L"> L</label> <label><input
+					type="checkbox" class="filter-size" value="XL"> XL</label>
 			</div>
 
-			<!-- MÀU SẮC -->
 			<div class="filter-group">
-				<strong>Màu sắc</strong> <label><input type="checkbox">
-					Đen</label> <label><input type="checkbox"> Trắng</label> <label><input
-					type="checkbox"> Đỏ</label> <label><input type="checkbox">
-					Hồng</label> <label><input type="checkbox"> Xanh</label> <label><input
-					type="checkbox"> Be</label>
+				<strong>Khoảng giá</strong> <label><input type="checkbox"
+					class="filter-price" value="0-200000"> Dưới 200.000đ</label> <label><input
+					type="checkbox" class="filter-price" value="200000-500000">
+					200.000đ – 500.000đ</label> <label><input type="checkbox"
+					class="filter-price" value="500000-999999999"> Trên
+					500.000đ</label>
 			</div>
-
-			<!-- GIÁ -->
-			<div class="filter-group">
-				<strong>Khoảng giá</strong> <label><input type="checkbox">
-					Dưới 200.000đ</label> <label><input type="checkbox">
-					200.000đ – 500.000đ</label> <label><input type="checkbox">
-					Trên 500.000đ</label>
-			</div>
-
 		</aside>
 
 		<!-- ================= PRODUCTS ================= -->
 		<section class="products">
-			<div class="products-header">
-				<h2>QUẦN ÁO NỮ</h2>
-				<select>
-					<option>Mới nhất</option>
-					<option>Giá tăng dần</option>
-					<option>Giá giảm dần</option>
-					<option>Bán chạy</option>
-				</select>
-			</div>
 
 			<div class="products-grid">
 
 				<!-- PRODUCT -->
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/ao-thun.jpg"
-							alt="Áo thun">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Áo thun basic</h4>
-						<div class="price">199.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
 
-				<!-- COPY thêm nhiều product-card -->
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/quan-short.jpg"
-							alt="Quần short">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Quần short nữ</h4>
-						<div class="price">399.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
+				<c:forEach items="${listP}" var="p">
+					<div class="product-card" data-type="${p.categoryName}"
+						data-size="${p.size}" data-price="${p.price}">
 
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/ao-croptop.jpg"
-							alt="Áo croptop">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
+						<div class="product-img">
+							<%-- Đường dẫn ảnh động dựa trên dữ liệu từ Database --%>
+							<img
+								src="${pageContext.request.contextPath}/assets/uploaded-images/${p.imageUrl}"
+								alt="${p.name}">
+							<div class="favorite">
+								<i class="fa-solid fa-heart"></i>
+							</div>
 						</div>
-					</div>
-					<div class="product-info">
-						<h4>Áo croptop</h4>
-						<div class="price">399.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
 
-				<div class="product-card">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/vay-yem.jpg"
-							alt="Váy yếm">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
+						<div class="product-info">
+							<h4>${p.name}</h4>
+							<div class="price">
+								<fmt:formatNumber value="${p.price}" pattern="#,###" />đ
+							</div>
+							<div class="btn-group">
+								<button class="btn btn-cart">
+									<i class="fa-solid fa-cart-shopping"></i>
+								</button>
+								<a href="${pageContext.request.contextPath}/product-detail?id=${p.id}" class="btn btn-detail">
+								    Chi tiết
+								</a>
+							</div>
 						</div>
 					</div>
-					<div class="product-info">
-						<h4>Váy yếm</h4>
-						<div class="price">599.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
+				</c:forEach>
 
+				<%-- Hiển thị thông báo nếu trống --%>
+				<c:if test="${empty listP}">
+					<div class="text-center w-100 py-5">
+						<p class="text-muted">Hiện chưa có sản phẩm nữ nào trong kho
+							hàng.</p>
+					</div>
+				</c:if>
 			</div>
 		</section>
 
 	</div>
 	<jsp:include page="/user-pages/footer.jsp" />
+
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+	    const checkboxes = document.querySelectorAll('.filter-group input[type="checkbox"]');
+	    const products = document.querySelectorAll(".product-card");
+
+	    checkboxes.forEach((checkbox) => {
+	        checkbox.addEventListener("change", filterProducts);
+	    });
+
+	    function filterProducts() {
+	        // Lấy danh sách giá trị được chọn của từng nhóm
+	        const selectedTypes = getSelectedValues(".filter-type");
+	        const selectedSizes = getSelectedValues(".filter-size");
+	        const selectedColors = getSelectedValues(".filter-color");
+	        const selectedPrices = getSelectedValues(".filter-price");
+
+	        products.forEach((product) => {
+	            const pType = product.getAttribute("data-type");
+	            const pSize = product.getAttribute("data-size");
+	            const pColor = product.getAttribute("data-color");
+	            const pPrice = parseFloat(product.getAttribute("data-price"));
+
+	            // Kiểm tra điều kiện (Nếu mảng rỗng thì coi như thỏa mãn - tức là chưa lọc nhóm đó)
+	            const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(pType);
+	            const sizeMatch = selectedSizes.length === 0 || selectedSizes.includes(pSize);
+	            const colorMatch = selectedColors.length === 0 || selectedColors.includes(pColor);
+	            
+	            let priceMatch = selectedPrices.length === 0;
+	            selectedPrices.forEach(range => {
+	                const [min, max] = range.split("-").map(Number);
+	                if (pPrice >= min && pPrice <= max) priceMatch = true;
+	            });
+
+	            // Hiển thị sản phẩm nếu thỏa mãn TẤT CẢ các nhóm lọc đã chọn
+	            if (typeMatch && sizeMatch && colorMatch && priceMatch) {
+	                product.style.display = ""; // Hiện lại trạng thái ban đầu (grid/block)
+	            } else {
+	                product.style.display = "none"; // Ẩn đi
+	            }
+	        });
+	    }
+
+	    // Hàm phụ để lấy mảng giá trị từ các checkbox đã check
+	    function getSelectedValues(className) {
+	        return Array.from(document.querySelectorAll(className + ":checked")).map(cb => cb.value);
+	    }
+	});
+	</script>
 </body>
 </html>
