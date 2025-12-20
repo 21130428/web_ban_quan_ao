@@ -1,0 +1,38 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Đặt lại mật khẩu</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/assets/css/style.css">
+</head>
+
+<body>
+	<div class="auth-container">
+		<div class="auth-box">
+			<h2>Đặt lại mật khẩu</h2>
+			<form action="${pageContext.request.contextPath}/reset-password"
+				method="post">
+				<!-- token -->
+				<input type="hidden" name="token" value="${param.token}" />
+				<div class="input-group">
+					<input type="password" name="password" placeholder="Mật khẩu mới"
+						required>
+				</div>
+				<div class="input-group">
+					<input type="password" name="confirm"
+						placeholder="Nhập lại mật khẩu" required>
+				</div>
+				<button type="submit" class="auth-btn">Xác nhận</button>
+			</form>
+			<c:if test="${not empty error}">
+				<p style="color: red">${error}</p>
+			</c:if>
+			<c:if test="${not empty message}">
+				<p style="color: green">${message}</p>
+			</c:if>
+		</div>
+	</div>
+</body>
+</html>

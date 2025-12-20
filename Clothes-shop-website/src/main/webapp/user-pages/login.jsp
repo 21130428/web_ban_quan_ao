@@ -37,6 +37,7 @@
 					href="${pageContext.request.contextPath}/user-pages/signup.jsp">Đăng
 					ký</a>
 			</p>
+			<a style="color: blue" href="${pageContext.request.contextPath}/user-pages/forgot-password.jsp">Quên mật khẩu</a>
 		</div>
 
 	</div>
