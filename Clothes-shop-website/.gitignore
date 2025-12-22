@@ -1,9 +1,9 @@
-/build/
-/target/
-/bin/
+build/
+target/
+bin/
+Servers/
+.settings/
 *.class
 .classpath
 .project
-.settings/
-Servers/
 .DS_Store
