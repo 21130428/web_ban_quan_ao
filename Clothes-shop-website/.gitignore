@@ -1,0 +1,9 @@
+/build/
+/target/
+/bin/
+*.class
+.classpath
+.project
+.settings/
+Servers/
+.DS_Store
