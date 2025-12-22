@@ -1,27 +1,50 @@
 package controller;
 
-import dao.UserDAO;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import dao.UserDao;
+
+/**
+ * Servlet implementation class ResetPasswordServlet
+ */
 @WebServlet("/reset-password")
 public class ResetPasswordServlet extends HttpServlet {
-	private UserDAO userDAO = new UserDAO();
+	private static final long serialVersionUID = 1L;
+	private UserDao userDAO = new UserDao();
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("/user-pages/reset-password.jsp").forward(request, response);
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ResetPasswordServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		String token = request.getParameter("token");
 		String password = request.getParameter("password");
 		String confirm = request.getParameter("confirm");
@@ -49,4 +72,5 @@ public class ResetPasswordServlet extends HttpServlet {
 		request.setAttribute("message", "Đổi mật khẩu thành công! Vui lòng đăng nhập.");
 		request.getRequestDispatcher("/user-pages/login.jsp").forward(request, response);
 	}
+
 }

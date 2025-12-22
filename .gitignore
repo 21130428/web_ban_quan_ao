@@ -1,11 +1,21 @@
-/.metadata/
+# Build outputs
+build/
+target/
+bin/
+*.class
 
-# Eclipse files
-/.classpath
-/.project
-/.settings/
-Servers2/
-*.launch
+# Eclipse / IDE
+.classpath
+.project
+.settings/
 
-# Maven build
-/target/
+# Tomcat/Eclipse Servers
+Servers/
+
+# Nếu repo chứa project lồng trong folder Clothes-shop-website/
+Clothes-shop-website/build/
+Clothes-shop-website/target/
+Clothes-shop-website/bin/
+Clothes-shop-website/.classpath
+Clothes-shop-website/.project
+Clothes-shop-website/.settings/
