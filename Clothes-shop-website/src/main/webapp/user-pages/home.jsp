@@ -1,5 +1,6 @@
-
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -359,30 +360,30 @@ section {
 					alt="">
 				<div class="swiper-desc">
 					<h1>Thời trang hiện đại</h1>
-					<p>Khám phá bộ sưu tập mới nhất 2025</p>
-					<a href="#" class="swiper-btn">Mua ngay</a>
+					<p>Khám phá bộ sưu tập hot nhất 2025</p>
+					<a href="${pageContext.request.contextPath}/user-pages/hot.jsp" class="swiper-btn">Mua ngay</a>
 				</div>
 			</div>
 
-			<div class="swiper-slide">
+            <div class="swiper-slide">
 				<img
 					src="${pageContext.request.contextPath}/assets/images/banner1.jpg"
 					alt="">
 				<div class="swiper-desc">
 					<h1>Phong cách nam tính</h1>
 					<p>Áo khoác – quần jean – streetwear</p>
-					<a href="#" class="swiper-btn">Xem ngay</a>
+					<a href="${pageContext.request.contextPath}/male-clothes" class="swiper-btn">Xem ngay</a>
 				</div>
 			</div>
 
-			<div class="swiper-slide">
+            <div class="swiper-slide">
 				<img
 					src="${pageContext.request.contextPath}/assets/images/banner2.jpg"
 					alt="">
 				<div class="swiper-desc">
 					<h1>Thời trang nữ</h1>
 					<p>Thanh lịch – hiện đại – cá tính</p>
-					<a href="#" class="swiper-btn">Khám phá</a>
+					<a href="${pageContext.request.contextPath}/female-clothes" class="swiper-btn">Khám phá</a>
 				</div>
 			</div>
 
@@ -401,13 +402,13 @@ section {
 		<h2 class="section-title">Danh mục nổi bật</h2>
 
 		<div class="category-list">
-			<a href="#" class="category-item"> <img
+			<a href="${pageContext.request.contextPath}/male-clothes"" class="category-item"> <img
 				src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-vest.jpg">
 				<span>Thời trang nam</span>
-			</a> <a href="#" class="category-item"> <img
+			</a> <a href="${pageContext.request.contextPath}/female-clothes" class="category-item"> <img
 				src="${pageContext.request.contextPath}/assets/images/Female/Female_adult/ao-2-day.jpg">
 				<span>Thời trang nữ</span>
-			</a> <a href="#" class="category-item"> <img
+			</a> <a href="${pageContext.request.contextPath}/jewelry" class="category-item"> <img
 				src="${pageContext.request.contextPath}/assets/images/Female/Trang_suc_nu/bong-tai.jpeg">
 				<span>Phụ kiện</span>
 			</a>
@@ -541,21 +542,6 @@ section {
 			</div>
 
 
-		</div>
-	</section>
-
-	<section class="promo">
-		<div class="promo-box">
-			<img
-				src="${pageContext.request.contextPath}/assets/images/promo.avif"
-				alt="Promo">
-
-			<div class="promo-content">
-				<span class="promo-tag">SALE 30%</span>
-				<h2>Ưu đãi mùa hè</h2>
-				<p>Giảm giá lên đến 30% cho toàn bộ sản phẩm mới</p>
-				<a href="#" class="promo-btn">Mua ngay</a>
-			</div>
 		</div>
 	</section>
 

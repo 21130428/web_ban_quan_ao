@@ -1,13 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Đặt lại mật khẩu</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/style.css">
 </head>
-
 <body>
 	<div class="auth-container">
 		<div class="auth-box">

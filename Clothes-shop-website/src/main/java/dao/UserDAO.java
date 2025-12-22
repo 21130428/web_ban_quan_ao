@@ -8,8 +8,7 @@ import java.time.LocalDateTime;
 
 import model.User;
 
-public class UserDAO {
-
+public class UserDao {
 	private User mapUser(ResultSet rs) throws Exception {
 		User user = new User();
 

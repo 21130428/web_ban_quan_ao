@@ -1,8 +1,10 @@
 package util;
 
 import java.util.Properties;
-import javax.mail.*;
-import javax.mail.internet.*;
+
+import jakarta.mail.*;
+import jakarta.mail.Session;
+import jakarta.mail.internet.*;
 
 public class EmailUtil {
 	public static void sendResetPasswordEmail(String toEmail, String resetLink) {
@@ -31,4 +33,5 @@ public class EmailUtil {
 			e.printStackTrace();
 		}
 	}
+
 }

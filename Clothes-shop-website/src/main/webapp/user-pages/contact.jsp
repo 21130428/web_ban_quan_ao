@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -177,17 +179,15 @@ body {
 			<div class="contact-form">
 				<h3>Gửi tin nhắn</h3>
 
-				<form action="contact" method="post">
+				<form action="${pageContext.request.contextPath}/contact" method="post">
 					<input type="text" name="fullName" placeholder="Họ và tên" required>
 					<input type="email" name="email" placeholder="Email" required>
 					<input type="text" name="phone" placeholder="Số điện thoại">
 					<textarea name="message" placeholder="Nội dung liên hệ..." required></textarea>
 
-					<button type="sumit"
-						onclick="window.location.href='${pageContext.request.contextPath}/user-pages/thank-you.jsp'">
-						<i class="fa-solid fa-paper-plane"></i> Gửi liên hệ
+					<button type="submit">
+					    <i class="fa-solid fa-paper-plane"></i> Gửi liên hệ
 					</button>
-
 				</form>
 			</div>
 

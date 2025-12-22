@@ -16,7 +16,7 @@
 			</a>
 		</li>
 		<li class="nav-item mb-2">
-			<a href="${pageContext.request.contextPath}/admin-pages/contact-manager.jsp"
+			<a href="${pageContext.request.contextPath}/admin/manage-contacts"
 			   class="nav-link text-white">
 			   <i class="bi bi-chat-dots me-2"></i>Tin nhắn
 			</a>
