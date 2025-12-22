@@ -313,12 +313,14 @@ body {
                                 <fmt:formatNumber value="${p.price}" pattern="#,###" />đ
                             </div>
                             <div class="btn-group">
-                                <button class="btn btn-cart">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </button>
-                               <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}" class="btn btn-detail">
-								    Chi tiết
-								</a>
+                                <form action="${pageContext.request.contextPath}/add-to-cart" method="post" style="display:inline;">
+    <input type="hidden" name="id" value="${p.id}"/>
+    <button class="btn btn-cart" type="submit">
+        <i class="fa-solid fa-cart-shopping"></i>
+    </button>
+</form>
+                               <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}">Chi tiết</a>
+                               
                             </div>
                         </div>
                     </div>

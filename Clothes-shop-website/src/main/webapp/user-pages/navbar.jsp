@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, model.CartItem" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Navbar</title>
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/style.css">
 
@@ -19,7 +21,7 @@
 /* USER dropdown chỉnh vị trí */
 .user-dropdown {
 	position: absolute;
-	top: 130%; /* đẩy xuống dưới icon */
+	top: 130%;
 	transform: translateX(-50%) translateY(8px);
 	min-width: 160px;
 	z-index: 2000;
@@ -62,9 +64,8 @@
 	transform: scale(1.15);
 }
 
-/* Badge số lượng */
-.cart-link::after {
-	content: "2"; /* sau này thay bằng Session */
+/* Badge số lượng giỏ hàng */
+.cart-badge {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -80,88 +81,135 @@
 }
 </style>
 </head>
+
 <body>
-	<header>
-		<div class="container nav">
-			<div class="logo" style="color: green"> <a href="${pageContext.request.contextPath}/user-pages/home.jsp">FASHION</a></div>
-			<ul class="menu">
-				<li><a
-					href="${pageContext.request.contextPath}/user-pages/home.jsp">Trang
-						chủ</a></li>
-				<li><a
-					href="${pageContext.request.contextPath}/user-pages/hot.jsp">Sản
-						phẩm</a>
-					<div class="dropdown">
-						<a href="${pageContext.request.contextPath}/user-pages/hot.jsp"
-							style="color: red">Hot</a> <a
-							href="${pageContext.request.contextPath}/male-clothes">Quần
-							áo nam</a> <a
-							href="${pageContext.request.contextPath}/female-clothes">Quần
-							áo nữ</a> <a href="${pageContext.request.contextPath}/jewelry">Trang
-							sức</a>
-					</div></li>
-				<li><a
-					href="${pageContext.request.contextPath}/user-pages/event.jsp">Thông
-						báo</a></li>
-				<li><a
-					href="${pageContext.request.contextPath}/user-pages/contact.jsp">Liên
-						hệ</a></li>
-			</ul>
 
-			<div class="search-box">
-				<input type="text" placeholder="Tìm kiếm sản phẩm..."> <i
-					class="fa fa-search"></i>
-			</div>
+<%
+    List<CartItem> cart =
+        (List<CartItem>) session.getAttribute("cart");
+    int totalQty = 0;
+    if (cart != null) {
+        for (CartItem c : cart) {
+            totalQty += c.getQuantity();
+        }
+    }
+%>
 
-			<div class="icons">
-				<a
-					href="${pageContext.request.contextPath}/user-pages/wish-list.jsp"
-					class="wishlist-link"> <i class="fa fa-heart"></i>
-				</a> <a href="${pageContext.request.contextPath}/user-pages/cart.jsp"
-					class="cart-link"> <i class="fa fa-shopping-cart"></i>
+<header>
+	<div class="container nav">
+
+		<div class="logo" style="color: green">
+			<a href="${pageContext.request.contextPath}/user-pages/home.jsp">
+				FASHION
+			</a>
+		</div>
+
+		<ul class="menu">
+			<li>
+				<a href="${pageContext.request.contextPath}/user-pages/home.jsp">
+					Trang chủ
 				</a>
-				<!-- USER -->
-				<div class="menu-user">
-					<i class="fa fa-user" id="userIcon"></i>
+			</li>
 
-					<div class="dropdown user-dropdown">
-						<!-- ĐÃ ĐĂNG NHẬP -->
-						<c:if test="${not empty sessionScope.user}">
-							<a href="#">${sessionScope.user.username} </a>
+			<li>
+				<a href="${pageContext.request.contextPath}/user-pages/hot.jsp">
+					Sản phẩm
+				</a>
+				<div class="dropdown">
+					<a href="${pageContext.request.contextPath}/user-pages/hot.jsp"
+						style="color: red">Hot</a>
+					<a href="${pageContext.request.contextPath}/male-clothes">
+						Quần áo nam
+					</a>
+					<a href="${pageContext.request.contextPath}/female-clothes">
+						Quần áo nữ
+					</a>
+					<a href="${pageContext.request.contextPath}/jewelry">
+						Trang sức
+					</a>
+				</div>
+			</li>
 
-							<a href="${pageContext.request.contextPath}/logout"> Đăng
-								xuất </a>
-						</c:if>
-						<!-- CHƯA ĐĂNG NHẬP -->
-						<c:if test="${empty sessionScope.user}">
-							<a href="${pageContext.request.contextPath}/user-pages/login.jsp">
-								Đăng nhập </a>
-							<a
-								href="${pageContext.request.contextPath}/user-pages/signup.jsp">
-								Đăng ký </a>
-						</c:if>
+			<li>
+				<a href="${pageContext.request.contextPath}/user-pages/event.jsp">
+					Thông báo
+				</a>
+			</li>
 
-					</div>
+			<li>
+				<a href="${pageContext.request.contextPath}/user-pages/contact.jsp">
+					Liên hệ
+				</a>
+			</li>
+		</ul>
+
+		<div class="search-box">
+			<input type="text" placeholder="Tìm kiếm sản phẩm...">
+			<i class="fa fa-search"></i>
+		</div>
+
+		<div class="icons">
+
+			<a href="${pageContext.request.contextPath}/user-pages/wish-list.jsp"
+				class="wishlist-link">
+				<i class="fa fa-heart"></i>
+			</a>
+
+			<a href="${pageContext.request.contextPath}/user-pages/cart.jsp"
+				class="cart-link">
+				<i class="fa fa-shopping-cart"></i>
+
+				<% if (totalQty > 0) { %>
+					<span class="cart-badge"><%= totalQty %></span>
+				<% } %>
+			</a>
+
+			<!-- USER -->
+			<div class="menu-user">
+				<i class="fa fa-user" id="userIcon"></i>
+
+				<div class="dropdown user-dropdown">
+
+					<c:if test="${not empty sessionScope.user}">
+						<a href="#">
+							${sessionScope.user.username}
+						</a>
+						<a href="${pageContext.request.contextPath}/logout">
+							Đăng xuất
+						</a>
+					</c:if>
+
+					<c:if test="${empty sessionScope.user}">
+						<a href="${pageContext.request.contextPath}/user-pages/login.jsp">
+							Đăng nhập
+						</a>
+						<a href="${pageContext.request.contextPath}/user-pages/signup.jsp">
+							Đăng ký
+						</a>
+					</c:if>
 
 				</div>
 			</div>
+
 		</div>
-	</header>
-</body>
+	</div>
+</header>
 
 <script>
 const userIcon = document.getElementById("userIcon");
 const userDropdown = document.querySelector(".user-dropdown");
 
 userIcon.onclick = (e) => {
-    e.stopPropagation();
-    userDropdown.classList.toggle("show");
+	e.stopPropagation();
+	userDropdown.classList.toggle("show");
 };
 
 document.onclick = () => {
-    userDropdown.classList.remove("show");
+	userDropdown.classList.remove("show");
 };
 </script>
+
 <script src="${pageContext.request.contextPath}/assets/js/app.js"></script>
 
+</body>
 </html>
