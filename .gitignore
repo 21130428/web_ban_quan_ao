@@ -1,8 +1,8 @@
 # Build outputs
-build/
-target/
-bin/
+/build/
+/target/
 *.class
+bin/
 
 # Eclipse / IDE
 .classpath
