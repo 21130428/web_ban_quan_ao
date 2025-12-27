@@ -10,9 +10,8 @@
 			</a>
 		</li>
 		<li class="nav-item mb-2">
-			<a href="${pageContext.request.contextPath}/admin-pages/order-manager.jsp"
-			   class="nav-link text-white">
-			   <i class="bi bi-cart me-2"></i>Đơn hàng
+			<a href="${pageContext.request.contextPath}/admin-orders" class="nav-link text-white">
+			    <i class="bi bi-cart me-2"></i>Đơn hàng
 			</a>
 		</li>
 		<li class="nav-item mb-2">

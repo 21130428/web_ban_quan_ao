@@ -326,33 +326,21 @@ body {
 		            <strong>Số lượng</strong>
 		            <div class="quantity">
 		                <button type="button" onclick="changeQty(-1)">-</button>
-		                <input type="text" id="qtyInput" name="quantity" value="1" readonly>
+		                <input type="text" id="qtyInput" value="1" readonly>
 		                <button type="button" onclick="changeQty(1)">+</button>
 		            </div>
 		        </div>
-		      <div class="actions">
-
-    <!-- Nút THÊM VÀO GIỎ -->
-    <form action="${pageContext.request.contextPath}/add-to-cart" method="post" style="margin:0;">
-        <input type="hidden" name="id" value="${p.id}"/>
-        <input type="hidden" name="quantity" id="qtyHidden" value="1"/>
-
-        <button class="btn btn-cart" type="submit">
-            <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
-        </button>
-    </form>
-
-    <!-- Nút YÊU THÍCH (khi bạn đã làm wishlist servlet) -->
-    <form action="${pageContext.request.contextPath}/add-to-wishlist" method="post" style="margin:0;">
-    <input type="hidden" name="id" value="${p.id}"/>
-    <button class="btn btn-fav" type="submit">
-        <i class="fa-solid fa-heart"></i> Yêu thích
-    </button>
-</form>
-    
-
-</div>
-		      
+		
+		        <div class="actions">
+		            <button class="btn btn-cart" data-id="${p.id}">
+		                <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
+		            </button>
+		            <button class="btn btn-fav" data-id="${p.id}">
+		                <i class="fa-solid fa-heart"></i> Yêu thích
+		            </button>
+		        </div>
+		    </div>
+		</div>
 
 		<!-- ================= REVIEWS ================= -->
 		<div class="reviews">
@@ -459,16 +447,12 @@ body {
 	<jsp:include page="/user-pages/footer.jsp" />
 	
 <script>
-function changeQty(step) {
-    const input = document.getElementById('qtyInput');
-    const hidden = document.getElementById('qtyHidden');
-
-    let val = parseInt(input.value || "1", 10) + step;
-    if (val < 1) val = 1;
-
-    input.value = val;
-    if (hidden) hidden.value = val;
-}
+    function changeQty(step) {
+        let input = document.getElementById('qtyInput');
+        let val = parseInt(input.value) + step;
+        if (val < 1) val = 1;
+        input.value = val;
+    }
 </script>
 </body>
 </html>

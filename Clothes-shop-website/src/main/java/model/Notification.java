@@ -70,7 +70,7 @@ public class Notification {
 		this.icon = icon;
 	}
 
-	public boolean isRead() {
+	public boolean getIsRead() {
 		return isRead;
 	}
 

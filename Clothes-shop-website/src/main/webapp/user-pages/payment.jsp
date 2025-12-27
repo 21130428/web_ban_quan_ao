@@ -160,82 +160,88 @@ body {
 </style>
 </head>
 <body>
-	<jsp:include page="/user-pages/navbar.jsp" />
+<jsp:include page="/user-pages/navbar.jsp" />
 	<div class="container">
-
-		<!-- TITLE -->
-		<div class="page-title">
-			<i class="fa-solid fa-credit-card"></i>
-			<h1>Thanh toán</h1>
-		</div>
-
-		<div class="checkout-wrapper">
-
-			<!-- ================= FORM ================= -->
-			<div class="checkout-form">
-				<h3>Thông tin giao hàng</h3>
-
-				<form action="checkout" method="post">
-
-					<div class="form-group">
-						<label>Họ và tên</label> <input type="text" name="fullName"
-							required>
-					</div>
-
-					<div class="form-group">
-						<label>Số điện thoại</label> <input type="text" name="phone"
-							required>
-					</div>
-
-					<div class="form-group">
-						<label>Email</label> <input type="email" name="email">
-					</div>
-
-					<div class="form-group">
-						<label>Địa chỉ giao hàng</label>
-						<textarea name="address" required></textarea>
-					</div>
-
-					<div class="payment-method">
-						<h3>Phương thức thanh toán</h3>
-
-						<label> <input type="radio" name="payment" checked>
-							Thanh toán khi nhận hàng (COD)
-						</label> <label> <input type="radio" name="payment">
-							Chuyển khoản ngân hàng
-						</label> <label> <input type="radio" name="payment"> Ví
-							điện tử (Momo, ZaloPay)
-						</label>
-					</div>
-
-				</form>
-			</div>
-
-			<!-- ================= SUMMARY ================= -->
-			<div class="order-summary">
-				<h3>Đơn hàng của bạn</h3>
-
-				<div class="summary-row">
-					<span>Tạm tính</span> <span>1.995.000đ</span>
-				</div>
-
-				<div class="summary-row">
-					<span>Phí vận chuyển</span> <span>30.000đ</span>
-				</div>
-
-				<div class="summary-row total">
-					<span>Tổng cộng</span> <span>2.025.000đ</span>
-				</div>
-
-				<button class="place-order-btn"
-			        type="button"
-			        onclick="window.location.href='${pageContext.request.contextPath}/user-pages/order-success.jsp'">
-			    Đặt hàng
-			</button>
-			</div>
-
-		</div>
-
+	    <div class="page-title">
+	        <i class="fa-solid fa-credit-card"></i>
+	        <h1>Thanh toán</h1>
+	    </div>
+	
+	    <div class="checkout-wrapper">
+	        <div class="checkout-form">
+	            <h3>Thông tin giao hàng</h3>
+	
+	            <%-- Form trỏ về CheckoutServlet --%>
+	            <form id="checkoutForm" action="${pageContext.request.contextPath}/checkout" method="post">
+	                <div class="form-group">
+	                    <label>Họ và tên</label> 
+	                    <input type="text" name="fullName" value="${sessionScope.user.username}" required>
+	                </div>
+	
+	                <div class="form-group">
+	                    <label>Số điện thoại</label> 
+	                    <input type="text" name="phone" required>
+	                </div>
+	
+	                <div class="form-group">
+	                    <label>Email</label> 
+	                    <input type="email" name="email" value="${sessionScope.user.email}">
+	                </div>
+	
+	                <div class="form-group">
+	                    <label>Địa chỉ giao hàng</label>
+	                    <textarea name="address" required></textarea>
+	                </div>
+	
+	                <div class="payment-method">
+	                    <h3>Phương thức thanh toán</h3>
+	                    <%-- Value phải khớp với ENUM trong Database của bạn: COD, BANK, EWALLET --%>
+	                    <label> 
+	                        <input type="radio" name="paymentMethod" value="COD" checked>
+	                        Thanh toán khi nhận hàng (COD)
+	                    </label> 
+	                    <label> 
+	                        <input type="radio" name="paymentMethod" value="BANK">
+	                        Chuyển khoản ngân hàng
+	                    </label> 
+	                    <label> 
+	                        <input type="radio" name="paymentMethod" value="EWALLET"> 
+	                        Ví điện tử (Momo, ZaloPay)
+	                    </label>
+	                </div>
+	            </form>
+	        </div>
+	
+	        <div class="order-summary">
+	            <h3>Đơn hàng của bạn</h3>
+	            
+	            <%-- Tính toán tổng tiền từ giỏ hàng thực tế --%>
+	            <c:set var="subtotal" value="0" />
+	            <c:forEach var="entry" items="${sessionScope.cart}">
+	                <c:set var="subtotal" value="${subtotal + (entry.value.price * entry.value.quantity)}" />
+	            </c:forEach>
+	
+	            <div class="summary-row">
+	                <span>Tạm tính</span> 
+	                <span><fmt:formatNumber value="${subtotal}" pattern="#,###" />đ</span>
+	            </div>
+	
+	            <div class="summary-row">
+	                <span>Phí vận chuyển</span> 
+	                <span>30.000đ</span>
+	            </div>
+	
+	            <div class="summary-row total">
+	                <span>Tổng cộng</span> 
+	                <span><fmt:formatNumber value="${subtotal + 30000}" pattern="#,###" />đ</span>
+	            </div>
+	
+	            <%-- Nút đặt hàng sẽ submit Form ở bên trái --%>
+	            <button class="place-order-btn" type="submit" form="checkoutForm">
+	                Xác nhận đặt hàng
+	            </button>
+	        </div>
+	    </div>
 	</div>
 	<jsp:include page="/user-pages/footer.jsp" />
 </body>

@@ -242,4 +242,54 @@ public class ProductDao extends DBConnect {
 			e.printStackTrace();
 		}
 	}
+	
+	// Lấy danh sách yêu thích
+	public List<Product> getWishlist(int userId) {
+	    List<Product> list = new ArrayList<>();
+	    // Lấy thông tin từ bảng products và join với favorites
+	    String sql = "SELECT p.* FROM favorites f "
+	               + "JOIN products p ON f.product_id = p.product_id "
+	               + "WHERE f.user_id = ?";
+	    try (Connection conn = getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+	        ps.setInt(1, userId);
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            Product p = new Product();
+	            p.setId(rs.getInt("product_id"));
+	            p.setName(rs.getString("product_name"));
+	            p.setPrice(rs.getDouble("price"));
+	            p.setImageUrl(rs.getString("image_url")); // Lấy ảnh trực tiếp từ bảng products
+	            p.setColor(rs.getString("color"));
+	            list.add(p);
+	        }
+	    } catch (Exception e) { 
+	        e.printStackTrace(); 
+	    }
+	    return list;
+	}
+
+    // Thêm vào yêu thích (Database)
+    public void addToWishlist(int userId, int productId) {
+        String sql = "INSERT IGNORE INTO favorites (user_id, product_id) VALUES (?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, productId);
+            ps.executeUpdate();
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+    
+    //Loại bỏ khỏi yêu thích
+    public void removeFromWishlist(int userId, int productId) {
+        String sql = "DELETE FROM favorites WHERE user_id = ? AND product_id = ?";
+        try (Connection conn = getConnection(); 
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, productId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

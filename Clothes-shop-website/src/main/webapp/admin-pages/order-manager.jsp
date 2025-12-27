@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -41,9 +43,29 @@
 						<i class="bi bi-cart-check me-2"></i>Quản lý đơn hàng
 					</h2>
 					<div class="btn-group">
-						<button class="btn btn-outline-dark active">Tất cả</button>
-						<button class="btn btn-outline-dark">Chờ xác nhận</button>
-						<button class="btn btn-outline-dark">Đang giao</button>
+					    <%-- Nút Tất cả (status=0) --%>
+					    <a href="admin-orders?status=0" 
+					       class="btn btn-outline-dark ${currentStatus == 0 ? 'active' : ''}">Tất cả</a>
+					    
+					    <%-- Nút Chờ xác nhận (status=1) --%>
+					    <a href="admin-orders?status=1" 
+					       class="btn btn-outline-dark ${currentStatus == 1 ? 'active' : ''}">Chờ xác nhận</a>
+					    
+					     <%-- Nút Chờ xác nhận (status=1) --%>
+					    <a href="admin-orders?status=2" 
+					       class="btn btn-outline-dark ${currentStatus == 2 ? 'active' : ''}">Đã xác nhận</a>
+					    
+					    <%-- Nút Đang giao (status=3) --%>
+					    <a href="admin-orders?status=3" 
+					       class="btn btn-outline-dark ${currentStatus == 3 ? 'active' : ''}">Đang giao</a>
+					       
+					    <%-- Nút Đang giao (status=3) --%>
+					    <a href="admin-orders?status=4" 
+					       class="btn btn-outline-dark ${currentStatus == 4 ? 'active' : ''}">Đã giao thành công</a>
+					       
+					    <%-- Nút Đã hủy (status=5) --%>
+					    <a href="admin-orders?status=5" 
+					       class="btn btn-outline-dark ${currentStatus == 5 ? 'active' : ''}">Đã hủy</a>
 					</div>
 				</div>
 
@@ -62,23 +84,44 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>#ORD-1024</td>
-									<td><strong>Nguyễn Văn A</strong><br> <small
-										class="text-muted">0901234567</small></td>
-									<td>15/12/2025</td>
-									<td class="fw-bold text-danger">1.250.000đ</td>
-									<td><span class="badge bg-secondary text-uppercase">COD</span></td>
-									<td><span class="badge rounded-pill bg-warning text-dark">Chờ
-											xác nhận</span></td>
-									<td class="text-center"><select
-										class="form-select form-select-sm d-inline-block w-auto ms-2">
-											<option>Đổi trạng thái</option>
-											<option>Đã xác nhận</option>
-											<option>Đang giao hàng</option>
-											<option>Đã hủy</option>
-									</select></td>
-								</tr>
+							<c:if test="${empty orderList}">
+						        <tr>
+						            <td colspan="7" class="text-center py-4 text-muted">Không có đơn hàng nào.</td>
+						        </tr>
+						    </c:if>
+							    <c:forEach var="o" items="${orderList}">
+							        <tr>
+							            <td>#ORD-${o.orderId}</td>
+							            <td><strong>${o.fullName}</strong><br> 
+							                <small class="text-muted">${o.phone}</small></td>
+							            <td><fmt:formatDate value="${o.createdAt}" pattern="dd/MM/yyyy HH:mm"/></td>
+							            <td class="fw-bold text-danger">
+							                <fmt:formatNumber value="${o.totalAmount}" pattern="#,###"/>đ
+							            </td>
+							            <td><span class="badge bg-secondary text-uppercase">${o.paymentMethod}</span></td>
+							            <td>
+							                <%-- Hiển thị màu sắc badge theo trạng thái --%>
+							                <c:set var="badgeClass" value="${o.statusId == 1 ? 'bg-warning' : (o.statusId == 5 ? 'bg-danger' : 'bg-success')}" />
+							                <span class="badge rounded-pill ${badgeClass}">${o.statusName}</span>
+							            </td>
+							            <td class="text-center">
+								            <button class="btn btn-sm btn-info view-detail-btn" 
+										            data-id="${o.orderId}" 
+										            data-address="${o.address}">
+										        <i class="bi bi-eye"></i>
+										    </button>
+							                <select class="form-select form-select-sm d-inline-block w-auto" 
+							                        onchange="changeStatus(${o.orderId}, this.value)">
+							                    <option value="0">Đổi trạng thái</option>
+							                    <option value="1">Chờ xác nhận</option>
+							                    <option value="2">Đã xác nhận</option>
+							                    <option value="3">Đang giao hàng</option>
+							                    <option value="4">Giao hàng thành công</option>
+							                    <option value="5">Hủy đơn</option>
+							                </select>
+							            </td>
+							        </tr>
+							    </c:forEach>
 							</tbody>
 						</table>
 					</div>
@@ -88,64 +131,83 @@
 	</div>
 
 	<div class="modal fade" id="orderDetailModal" tabindex="-1">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Chi tiết đơn hàng #ORD-1024</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
-					<h6>Thông tin giao hàng:</h6>
-					<p class="small text-muted">Địa chỉ: 123 Đường ABC, Quận 1,
-						TP.HCM</p>
-					<hr>
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th>Sản phẩm</th>
-								<th>Giá</th>
-								<th>SL</th>
-								<th>Thành tiền</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Áo thun Nam Men-01</td>
-								<td>350.000đ</td>
-								<td>2</td>
-								<td>700.000đ</td>
-							</tr>
-							<tr>
-								<td>Nhẫn Bạc Jewelry-05</td>
-								<td>550.000đ</td>
-								<td>1</td>
-								<td>550.000đ</td>
-							</tr>
-						</tbody>
-						<tfoot>
-							<tr>
-								<th colspan="3" class="text-end">Phí ship:</th>
-								<th>30.000đ</th>
-							</tr>
-							<tr>
-								<th colspan="3" class="text-end">Tổng cộng:</th>
-								<th class="text-danger">1.280.000đ</th>
-							</tr>
-						</tfoot>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Đóng</button>
-					<button type="button" class="btn btn-success">
-						<i class="bi bi-printer"></i> In hóa đơn
-					</button>
-				</div>
-			</div>
-		</div>
+	    <div class="modal-dialog modal-lg">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title">Chi tiết đơn hàng <span id="md-order-id"></span></h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+	            </div>
+	            <div class="modal-body">
+	                <h6>Thông tin giao hàng:</h6>
+	                <p class="small text-muted" id="md-address"></p>
+	                <hr>
+	                <table class="table table-sm">
+	                    <thead>
+	                        <tr>
+	                            <th>Sản phẩm</th>
+	                            <th>Giá</th>
+	                            <th>SL</th>
+	                            <th>Thành tiền</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody id="order-items-body">
+	                        </tbody>
+	                </table>
+	            </div>
+	            </div>
+	    </div>
 	</div>
+	
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>	
+	
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		
+<script>
+function changeStatus(orderId, statusId) {
+    if(statusId !== "") {
+        if(confirm("Xác nhận thay đổi trạng thái đơn hàng này?")) {
+            window.location.href = "admin-orders?action=updateStatus&oid=" + orderId + "&sid=" + statusId;
+        }
+    }
+}
+</script>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.view-detail-btn').click(function() {
+        var orderId = $(this).data('id');
+        var address = $(this).data('address');
+        
+        // 1. Điền thông tin cơ bản vào Modal
+        $('#md-order-id').text('#ORD-' + orderId);
+        $('#md-address').text('Địa chỉ: ' + address);
+        
+        // 2. Gọi Ajax lấy chi tiết sản phẩm
+        $.ajax({
+            url: 'admin-order-detail',
+            type: 'GET',
+            data: { oid: orderId },
+            success: function(items) {
+                var html = '';
+                var total = 0;
+                items.forEach(function(item) {
+                    var subtotal = item.price * item.quantity;
+                    total += subtotal;
+                    html += `<tr>
+                                <td>\${item.productName}</td>
+                                <td>\${item.price.toLocaleString()}đ</td>
+                                <td>\${item.quantity}</td>
+                                <td>\${subtotal.toLocaleString()}đ</td>
+                             </tr>`;
+                });
+                $('#order-items-body').html(html);
+                // Hiển thị Modal
+                var myModal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
+                myModal.show();
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>

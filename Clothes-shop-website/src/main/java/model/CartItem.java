@@ -1,24 +1,41 @@
 package model;
 
 public class CartItem {
-	 private int productId;
-	    private String name;
-	    private String image;
-	    private double price;
-	    private int quantity;
+	private Product product;
+	private int quantity;
+	private double price;
 
-	    public CartItem(int productId, String name, String image, double price, int quantity) {
-	        this.productId = productId;
-	        this.name = name;
-	        this.image = image;
-	        this.price = price;
-	        this.quantity = quantity;
-	    }
-	    // getter & setter
-	    public int getProductId() { return productId; }
-	    public String getName() { return name; }
-	    public String getImage() { return image; }
-	    public double getPrice() { return price; }
-	    public int getQuantity() { return quantity; }
-	    public void setQuantity(int quantity) { this.quantity = quantity; }
+	public CartItem() {
+	}
+
+	public CartItem(Product product, int quantity, double price) {
+		this.product = product;
+		this.quantity = quantity;
+		this.price = price;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
 }

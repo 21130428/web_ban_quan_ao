@@ -188,44 +188,63 @@
     </div>
 
     <!-- ================= WISHLIST ================= -->
-    <div class="wishlist-grid">
-
-        <!-- PRODUCT -->
-        <div class="product-card">
-            <div class="product-img">
-                <img src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/ao-thun.jpg"
-                     alt="Áo thun nữ">
-                <div class="remove-fav">
-                    <i class="fa-solid fa-xmark"></i>
-                </div>
-            </div>
-            <div class="product-info">
-                <h4>Áo thun basic nữ</h4>
-                <div class="price">199.000đ</div>
-                <div class="btn-group">
-                    <button class="btn btn-cart">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </button>
-                    <button class="btn btn-detail">Chi tiết</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- COPY thêm nhiều product-card -->
-
-    </div>
-
-    <!-- EMPTY STATE (dùng khi chưa có yêu thích) -->
-    <!--
-    <div class="empty">
-        <i class="fa-solid fa-heart-crack"></i>
-        <h3>Chưa có sản phẩm yêu thích</h3>
-        <p>Hãy thêm sản phẩm bạn thích để xem lại sau</p>
-        <a href="${pageContext.request.contextPath}/index.jsp">Tiếp tục mua sắm</a>
-    </div>
-    -->
-
-</div>
+    <div class="container">
+	    <c:choose>
+	        <%-- Kiểm tra nếu danh sách yêu thích (wishlist) không trống --%>
+	        <c:when test="${not empty wishlist}">
+	            <div class="wishlist-grid">
+	                <c:forEach var="p" items="${wishlist}">
+	                    <div class="product-card">
+	                        <div class="product-img">
+	                            <%-- Hiển thị ảnh sản phẩm từ thuộc tính imageUrl --%>
+	                            <img
+								src="${pageContext.request.contextPath}/assets/uploaded-images/${p.imageUrl}"
+								alt="${p.name}">
+	                            
+	                            <%-- Nút Xóa khỏi yêu thích --%>
+	                            <div class="remove-fav" 
+	                                 onclick="window.location.href='wishlist-controller?action=delete&pid=${p.id}'">
+	                                <i class="fa-solid fa-xmark"></i>
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="product-info">
+	                            <h4>${p.name}</h4>
+	                            <div class="price">
+	                                <fmt:formatNumber value="${p.price}" pattern="#,###" />đ
+	                            </div>
+	                            
+	                            <div class="btn-group">
+	                                <%-- Nút thêm nhanh vào giỏ hàng --%>
+	                                <button class="btn btn-cart" 
+	                                        onclick="window.location.href='cart-controller?action=add&pid=${p.id}'">
+	                                    <i class="fa-solid fa-cart-shopping"></i>
+	                                </button>
+	                                
+	                                <%-- Nút xem chi tiết sản phẩm --%>
+	                                <button class="btn btn-detail" 
+	                                        onclick="window.location.href='detail?pid=${p.id}'">
+	                                    Chi tiết
+	                                </button>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </c:forEach>
+	            </div>
+	        </c:when>
+	
+	        <%-- EMPTY STATE: Hiển thị khi danh sách trống --%>
+	        <c:otherwise>
+	            <div class="empty">
+	                <i class="fa-solid fa-heart-crack"></i>
+	                <h3>Chưa có sản phẩm yêu thích</h3>
+	                <p>Hãy thêm sản phẩm bạn thích để xem lại sau</p>
+	                <a href="${pageContext.request.contextPath}/user-pages/home.jsp" class="btn-primary">Tiếp tục mua sắm</a>
+	            </div>
+	        </c:otherwise>
+	    </c:choose>
+	</div>
+	
 	<jsp:include page="/user-pages/footer.jsp" />
 </body>
 </html>

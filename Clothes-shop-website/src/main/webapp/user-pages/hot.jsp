@@ -6,9 +6,14 @@
 <head>
 <title>Sản phẩm hot | Shop Quần Áo</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+	rel="stylesheet">
+
+<!-- Font Awesome -->
 <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <style>
 * {
@@ -29,16 +34,88 @@ body {
 	padding: 20px;
 }
 
+/* ================= FAVORITE (HEART) ================= */
+.favorite {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: white;
+	padding: 8px;
+	border-radius: 50%;
+	cursor: pointer;
+	color: #ccc;
+	transition: all 0.3s ease;
+}
+
+.favorite:hover {
+	background: #e74c3c;
+	color: white;
+	transform: scale(1.15);
+	box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+}
+
+/* ================= BUTTON COMMON ================= */
+.btn {
+	transition: all 0.3s ease;
+}
+
+/* ================= ADD TO CART ================= */
+.btn-cart {
+	background: #2ecc71;
+	color: white;
+}
+
+.btn-cart:hover {
+	background: #27ae60;
+	transform: translateY(-3px);
+	box-shadow: 0 5px 15px rgba(46, 204, 113, 0.5);
+}
+
+/* ================= DETAIL BUTTON ================= */
+.btn-detail {
+	background: #3498db;
+	color: white;
+}
+
+.btn-detail:hover {
+	background: #2980b9;
+	transform: translateY(-3px);
+	box-shadow: 0 5px 15px rgba(52, 152, 219, 0.5);
+}
+
+/* ================= FILTER ================= */
 .filter {
 	background: white;
 	padding: 20px;
 	border-radius: 10px;
 }
 
+.filter h3 {
+	margin-bottom: 15px;
+}
+
+.filter-group {
+	margin-bottom: 20px;
+}
+
+.filter-group label {
+	display: block;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+
+/* ================= PRODUCTS ================= */
 .products {
 	background: white;
 	padding: 20px;
 	border-radius: 10px;
+}
+
+.products-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
 }
 
 .products-grid {
@@ -52,6 +129,7 @@ body {
 	border-radius: 10px;
 	overflow: hidden;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+	transition: transform 0.3s;
 }
 
 .product-img {
@@ -71,8 +149,8 @@ body {
 	background: white;
 	padding: 8px;
 	border-radius: 50%;
-	color: #e74c3c;
 	cursor: pointer;
+	color: #e74c3c;
 }
 
 .product-info {
@@ -113,104 +191,195 @@ body {
 	background: #3498db;
 	color: white;
 }
+
+/* ================= PRODUCTS HEADER ================= */
+.products-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 25px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #eee;
+}
+
+/* TITLE */
+.products-header h2 {
+	font-size: 22px;
+	font-weight: 600;
+	color: #333;
+	position: relative;
+}
+
+/* underline nhẹ cho tiêu đề */
+.products-header h2::after {
+	content: "";
+	width: 60px;
+	height: 3px;
+	background: #e67e22;
+	position: absolute;
+	left: 0;
+	bottom: -8px;
+	border-radius: 2px;
+}
+
+/* ================= SORT SELECT ================= */
+.products-header select {
+	padding: 8px 15px;
+	border-radius: 20px;
+	border: 1px solid #ddd;
+	font-size: 14px;
+	cursor: pointer;
+	background: #fff;
+	outline: none;
+	transition: all 0.3s ease;
+}
+
+/* hover */
+.products-header select:hover {
+	border-color: #3498db;
+}
+
+/* focus */
+.products-header select:focus {
+	border-color: #3498db;
+	box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
 </style>
 </head>
-
 <body>
-<jsp:include page="/user-pages/navbar.jsp" />
+	<jsp:include page="/user-pages/navbar.jsp" />
+	<div class="container">
 
-<div class="container">
+		<!-- ================= FILTER ================= -->
+		<aside class="filter">
+		    <h3>Lọc sản phẩm</h3>
+		
+		    <div class="filter-group">
+		        <strong>Loại</strong> 
+		        <label><input type="checkbox" class="filter-type" value="Áo thun"> Áo thun</label> 
+		        <label><input type="checkbox" class="filter-type" value="Áo sơ mi"> Áo sơ mi</label> 
+		        <label><input type="checkbox" class="filter-type" value="Quần jean"> Quần jean</label> 
+		        <label><input type="checkbox" class="filter-type" value="Váy"> Váy</label>
+		    </div>
+		
+		    <div class="filter-group">
+		        <strong>Giới tính</strong> 
+		        <label><input type="radio" name="gender" class="filter-gender" value="NAM"> Nam</label> 
+		        <label><input type="radio" name="gender" class="filter-gender" value="NU"> Nữ</label> 
+		        <label><input type="radio" name="gender" class="filter-gender" value="UNISEX"> Unisex</label>
+		        <label><input type="radio" name="gender" class="filter-gender" value="all" checked> Tất cả</label>
+		    </div>
+		
+		    <div class="filter-group">
+		        <strong>Khoảng giá</strong> 
+		        <label><input type="checkbox" class="filter-price" value="0-200000"> Dưới 200k</label> 
+		        <label><input type="checkbox" class="filter-price" value="200000-500000"> 200k - 500k</label> 
+		        <label><input type="checkbox" class="filter-price" value="500000-999999999"> Trên 500k</label>
+		    </div>
+		</aside>
 
-	<!-- FILTER -->
-	<aside class="filter">
-		<h3>Lọc sản phẩm</h3>
-		<label><input type="checkbox"> Áo thun</label><br>
-		<label><input type="checkbox"> Quần jean</label>
-	</aside>
+		<!-- ================= PRODUCTS ================= -->
+		<section class="products">
 
-	<!-- PRODUCTS -->
-	<section class="products">
-		<div class="products-grid">
+			<div class="products-grid">
 
-			<!-- ================= PRODUCT 1 ================= -->
-			<div class="product-card" data-price="199000">
-				<div class="product-img">
-					<img src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/ao-thun.jpg">
-					<div class="favorite">
-						<i class="fa-solid fa-heart"></i>
+				<!-- PRODUCT -->
+				<div class="product-card" data-type="Áo thun" data-gender="NAM" data-price="199000">
+					<div class="product-img">
+						<img
+							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/ao-thun.jpg"
+							alt="Áo thun">
+						<div class="favorite">
+							<i class="fa-solid fa-heart"></i>
+						</div>
 					</div>
-				</div>
-
-				<div class="product-info">
-					<h4>Áo thun basic</h4>
-					<div class="price">199.000đ</div>
-
-					<div class="btn-group">
-
-						<!-- ADD TO CART -->
-						<form action="${pageContext.request.contextPath}/add-to-cart"
-						      method="post" style="flex:1">
-
-							<input type="hidden" name="id" value="1">
-							<input type="hidden" name="name" value="Áo thun basic">
-							<input type="hidden" name="image" value="Male/Male_teenager/ao-thun.jpg">
-							<input type="hidden" name="price" value="199000">
-							<input type="hidden" name="quantity" value="1">
-
-							<button type="submit" class="btn btn-cart">
+					<div class="product-info">
+						<h4>Áo thun basic</h4>
+						<div class="price">199.000đ</div>
+						<div class="btn-group">
+							<button class="btn btn-cart">
 								<i class="fa-solid fa-cart-shopping"></i>
 							</button>
-						</form>
-
-						<button class="btn btn-detail"
-						        onclick="window.location.href='${pageContext.request.contextPath}/user-pages/product-detail.jsp'">
-							Chi tiết
-						</button>
-
-					</div>
-				</div>
-			</div>
-
-			<!-- ================= PRODUCT 2 ================= -->
-			<div class="product-card" data-price="399000">
-				<div class="product-img">
-					<img src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/quan-jean.jpg">
-					<div class="favorite">
-						<i class="fa-solid fa-heart"></i>
+							<button class="btn btn-detail" type="button"
+								onclick="window.location.href='${pageContext.request.contextPath}/user-pages/product-detail.jsp'">Chi
+								tiết</button>
+						</div>
 					</div>
 				</div>
 
-				<div class="product-info">
-					<h4>Quần jean nam</h4>
-					<div class="price">399.000đ</div>
-
-					<div class="btn-group">
-
-						<form action="${pageContext.request.contextPath}/add-to-cart"
-						      method="post" style="flex:1">
-
-							<input type="hidden" name="id" value="2">
-							<input type="hidden" name="name" value="Quần jean nam">
-							<input type="hidden" name="image" value="Male/Male_teenager/quan-jean.jpg">
-							<input type="hidden" name="price" value="399000">
-							<input type="hidden" name="quantity" value="1">
-
-							<button type="submit" class="btn btn-cart">
+				<!-- COPY thêm nhiều product-card -->
+				<div class="product-card" data-type="Quần jean" data-gender="NAM" data-price="399000">
+					<div class="product-img">
+						<img
+							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/quan-jean.jpg"
+							alt="Quần jean">
+						<div class="favorite">
+							<i class="fa-solid fa-heart"></i>
+						</div>
+					</div>
+					<div class="product-info">
+						<h4>Quần jean nam</h4>
+						<div class="price">399.000đ</div>
+						<div class="btn-group">
+							<button class="btn btn-cart">
 								<i class="fa-solid fa-cart-shopping"></i>
 							</button>
-						</form>
-
-						<button class="btn btn-detail">Chi tiết</button>
-
+							<button class="btn btn-detail">Chi tiết</button>
+						</div>
 					</div>
 				</div>
+
 			</div>
+		</section>
 
-		</div>
-	</section>
+	</div>
+	<jsp:include page="/user-pages/footer.jsp" />
+	
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const filters = document.querySelectorAll('.filter-group input');
+    const products = document.querySelectorAll(".product-card");
 
-</div>
+    filters.forEach((input) => {
+        input.addEventListener("change", filterProducts);
+    });
 
-<jsp:include page="/user-pages/footer.jsp" />
+    function filterProducts() {
+        // 1. Thu thập dữ liệu từ các bộ lọc
+        const selectedTypes = Array.from(document.querySelectorAll(".filter-type:checked")).map(cb => cb.value);
+        const selectedPrices = Array.from(document.querySelectorAll(".filter-price:checked")).map(cb => cb.value);
+        
+        // Lấy giá trị radio gender đang chọn
+        const genderRadio = document.querySelector(".filter-gender:checked");
+        const selectedGender = genderRadio ? genderRadio.value : "all";
+
+        products.forEach((product) => {
+            const pType = product.getAttribute("data-type");
+            const pGender = product.getAttribute("data-gender");
+            const pPrice = parseFloat(product.getAttribute("data-price"));
+
+            // Logic kiểm tra Loại (Nếu không chọn cái nào thì hiện tất cả)
+            const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(pType);
+
+            // Logic kiểm tra Giới tính
+            const genderMatch = selectedGender === "all" || pGender === selectedGender;
+
+            // Logic kiểm tra Giá
+            let priceMatch = selectedPrices.length === 0;
+            selectedPrices.forEach(range => {
+                const [min, max] = range.split("-").map(Number);
+                if (pPrice >= min && pPrice <= max) priceMatch = true;
+            });
+
+            // HIỂN THỊ: Sản phẩm phải khớp TẤT CẢ các điều kiện (AND)
+            if (typeMatch && genderMatch && priceMatch) {
+                product.style.display = ""; 
+            } else {
+                product.style.display = "none";
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>

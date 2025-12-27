@@ -301,9 +301,9 @@ body {
                             <%-- Đường dẫn ảnh động dựa trên dữ liệu từ Database --%>
                             <img src="${pageContext.request.contextPath}/assets/uploaded-images/${p.imageUrl}" 
                                  alt="${p.name}">
-                            <div class="favorite">
-                                <i class="fa-solid fa-heart"></i>
-                            </div>
+                            <div class="favorite btn-wishlist" data-id="${p.id}">
+							    <i class="fa-solid fa-heart"></i>
+							</div>
                         </div>
                         
                         <div class="product-info">
@@ -313,14 +313,12 @@ body {
                                 <fmt:formatNumber value="${p.price}" pattern="#,###" />đ
                             </div>
                             <div class="btn-group">
-                                <form action="${pageContext.request.contextPath}/add-to-cart" method="post" style="display:inline;">
-    <input type="hidden" name="id" value="${p.id}"/>
-    <button class="btn btn-cart" type="submit">
-        <i class="fa-solid fa-cart-shopping"></i>
-    </button>
-</form>
-                               <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}">Chi tiết</a>
-                               
+                               <button class="btn btn-cart add-to-cart-btn" data-id="${p.id}">
+								    <i class="fa-solid fa-cart-shopping"></i>
+								</button>
+                               <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}" class="btn btn-detail">
+								    Chi tiết
+								</a>
                             </div>
                         </div>
                     </div>

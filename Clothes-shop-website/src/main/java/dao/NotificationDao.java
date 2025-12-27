@@ -22,6 +22,7 @@ public class NotificationDao extends DBConnect {
                 n.setIcon(rs.getString("icon"));
                 n.setRead(rs.getBoolean("is_read"));
                 n.setCreatedAt(rs.getTimestamp("created_at"));
+                n.setType(rs.getString("type"));
                 list.add(n);
             }
         } catch (Exception e) { e.printStackTrace(); }
@@ -46,5 +47,18 @@ public class NotificationDao extends DBConnect {
             ps.setInt(1, notifyId);
             ps.executeUpdate();
         } catch (Exception e) { e.printStackTrace(); }
+    }
+    
+    public void addNotification(int userId, String title, String content, String type) {
+    	String sql = "INSERT INTO user_notifications (user_id, title, content, type, is_read, created_at) VALUES (?, ?, ?, ?, FALSE, NOW())";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        	ps.setInt(1, userId);
+            ps.setString(2, title);
+            ps.setString(3, content);
+            ps.setString(4, type);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,9 +1,0 @@
-build/
-target/
-bin/
-Servers/
-.settings/
-*.class
-.classpath
-.project
-.DS_Store
