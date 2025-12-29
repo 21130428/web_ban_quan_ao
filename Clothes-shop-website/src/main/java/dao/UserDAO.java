@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.User;
 
-public class UserDao {
+public class UserDAO {
 	private User mapUser(ResultSet rs) throws Exception {
 		User user = new User();
 

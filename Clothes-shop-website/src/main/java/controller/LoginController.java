@@ -1,16 +1,16 @@
 package controller;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.User;
 
 import java.io.IOException;
 
-import dao.UserDao;
+import dao.UserDAO;
 
 /**
  * Servlet implementation class LoginController
@@ -43,7 +43,7 @@ public class LoginController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		UserDao userDAO = new UserDao();
+		UserDAO userDAO = new UserDAO();
 		User user = userDAO.login(email, password);
 		if (user == null) {
 			request.setAttribute("error", "Email hoặc mật khẩu không đúng");

@@ -1,13 +1,13 @@
 package controller;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import dao.UserDao;
+import dao.UserDAO;
 
 /**
  * Servlet implementation class SignupController
@@ -49,7 +49,7 @@ public class SignupController extends HttpServlet {
 			request.getRequestDispatcher("/user-pages/signup.jsp").forward(request, response);
 			return;
 		}
-		UserDao userDAO = new UserDao();
+		UserDAO userDAO = new UserDAO();
 		// check email trùng
 		if (userDAO.emailExists(email)) {
 			request.setAttribute("error", "Email đã tồn tại");
