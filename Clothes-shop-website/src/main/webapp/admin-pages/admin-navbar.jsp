@@ -3,26 +3,44 @@
 	style="background: #212529; min-height: 100vh; color: white;">
 	<h4 class="text-center mb-4">SHOP ADMIN</h4>
 	<ul class="nav flex-column" id="adminSidebar">
+	
 		<li class="nav-item mb-2">
 			<a href="${pageContext.request.contextPath}/admin/manage-product"
 			   class="nav-link text-white"> 
 			   <i class="bi bi-box-seam me-2"></i>Sản phẩm
 			</a>
 		</li>
+		
 		<li class="nav-item mb-2">
 			<a href="${pageContext.request.contextPath}/admin-orders" class="nav-link text-white">
 			    <i class="bi bi-cart me-2"></i>Đơn hàng
 			</a>
 		</li>
+		
 		<li class="nav-item mb-2">
 			<a href="${pageContext.request.contextPath}/admin/manage-contacts"
 			   class="nav-link text-white">
 			   <i class="bi bi-chat-dots me-2"></i>Tin nhắn
 			</a>
 		</li>
+		
+		<li class="nav-item mb-2">
+		    <a href="${pageContext.request.contextPath}/admin/manage-users"
+		       class="nav-link text-white"> 
+		       <i class="bi bi-people me-2"></i>Người dùng
+		    </a>
+		</li>
+		
+		<li class="nav-item mb-2">
+		    <a href="${pageContext.request.contextPath}/admin/manage-reviews"
+		       class="nav-link text-white">
+		       <i class="bi bi-star me-2"></i>Đánh giá
+		    </a>
+		</li>
+		
 		<li class="nav-item mb-2">
 			<hr class="bg-secondary"> 
-			<a href="../logout" class="nav-link text-danger">
+			<a href="${pageContext.request.contextPath}/logout" class="nav-link text-danger">
 				<i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
 			</a>
 		</li>

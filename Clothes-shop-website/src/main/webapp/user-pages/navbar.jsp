@@ -69,18 +69,16 @@
 	<header>
 		<div class="container nav">
 			<div class="logo" style="color: green">
-				<a href="${pageContext.request.contextPath}/user-pages/home.jsp">FASHION</a>
+				<a href="${pageContext.request.contextPath}/home">FASHION</a>
 			</div>
 			<ul class="menu">
-				<li><a
-					href="${pageContext.request.contextPath}/user-pages/home.jsp">Trang
-						chủ</a></li>
+				<li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
 				
-				<li><a href="${pageContext.request.contextPath}/user-pages/hot.jsp" 
+				<li><a href="${pageContext.request.contextPath}/hot-products" 
 					   style="color: red; font-weight: bold;">Hot</a></li>
 
 				<li><a
-					href="${pageContext.request.contextPath}/user-pages/hot.jsp">Sản
+					href="${pageContext.request.contextPath}/hot-products">Sản
 						phẩm</a>
 					<div class="dropdown">
 						<a href="${pageContext.request.contextPath}/male-clothes">Quần
@@ -91,15 +89,8 @@
 							sức</a>
 					</div></li>
 
-				<li><a
-					href="${pageContext.request.contextPath}/user-pages/contact.jsp">Liên
-						 hệ</a></li>
+				<li><a href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
 			</ul>
-
-			<div class="search-box">
-				<input type="text" placeholder="Tìm kiếm sản phẩm..."> <i
-					class="fa fa-search"></i>
-			</div>
 
 			<div class="icons">
 				<a href="${pageContext.request.contextPath}/wishlist-controller?action=view"

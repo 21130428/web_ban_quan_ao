@@ -135,7 +135,7 @@
     </p>
 
     <div class="btn-group" style="margin-top: 30px; display: flex; gap: 15px; justify-content: center;">
-        <a href="${pageContext.request.contextPath}/user-pages/home.jsp" class="btn btn-home" style="padding: 12px 25px; background: #3498db; color: white; text-decoration: none; border-radius: 25px; display: flex; align-items: center; gap: 8px;">
+        <a href="${pageContext.request.contextPath}/home" class="btn btn-home" style="padding: 12px 25px; background: #3498db; color: white; text-decoration: none; border-radius: 25px; display: flex; align-items: center; gap: 8px;">
             <i class="fa-solid fa-house"></i> Tiếp tục mua sắm
         </a>
     </div>

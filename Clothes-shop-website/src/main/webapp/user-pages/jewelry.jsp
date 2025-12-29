@@ -4,7 +4,7 @@
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <html lang="vi">
 <head>
-<title>Trang sức| Shop Quần Áo</title>
+<title>Trang sức| Fashion Shop</title>
 
 <!-- Google Font -->
 <link

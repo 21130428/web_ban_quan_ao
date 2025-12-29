@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<title>Sản phẩm nam| Shop Quần Áo</title>
+<title>Sản phẩm nam| Fashion Shop</title>
 
 <!-- Google Font -->
 <link

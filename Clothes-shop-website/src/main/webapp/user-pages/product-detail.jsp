@@ -140,49 +140,6 @@ body {
 	color: red;
 }
 
-/* ================= SUGGEST PRODUCTS ================= */
-.suggest-title {
-	margin: 40px 0 20px;
-	font-size: 22px;
-}
-
-.suggest-grid {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 20px;
-}
-
-.product-card {
-	background: white;
-	border-radius: 10px;
-	overflow: hidden;
-	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-	transition: 0.3s;
-}
-
-.product-card:hover {
-	transform: translateY(-6px);
-}
-
-.product-card img {
-	width: 100%;
-	height: 220px;
-	object-fit: cover;
-}
-
-.product-card .info {
-	padding: 12px;
-}
-
-.product-card h4 {
-	font-size: 15px;
-	margin-bottom: 6px;
-}
-
-.product-card .price {
-	font-size: 16px;
-	color: #e74c3c;
-}
 
 /* ================= REVIEWS ================= */
 .reviews {
@@ -277,7 +234,7 @@ body {
 </style>
 </head>
 <body>
-	<jsp:include page="/user-pages/navbar.jsp" />
+<jsp:include page="/user-pages/navbar.jsp" />
 	<div class="container">
 
 		<!-- ================= PRODUCT DETAIL ================= -->
@@ -335,9 +292,9 @@ body {
 		            <button class="btn btn-cart" data-id="${p.id}">
 		                <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ
 		            </button>
-		            <button class="btn btn-fav" data-id="${p.id}">
-		                <i class="fa-solid fa-heart"></i> Yêu thích
-		            </button>
+		            <button class="btn btn-fav btn-wishlist" data-id="${p.id}">
+				        Yêu thích <i class="fa-solid fa-heart ms-2"></i>
+				    </button>
 		        </div>
 		    </div>
 		</div>
@@ -349,98 +306,55 @@ body {
 
 			<!-- SUMMARY -->
 			<div class="review-summary">
-				<div class="avg-rating">
-					<span class="score">4.5</span>
-					<div class="stars">
-						<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star-half-stroke"></i>
-					</div>
-					<p>12 đánh giá</p>
-				</div>
+			    <div class="avg-rating">
+			        <span class="score">${reviewStats.avg != null ? String.format("%.1f", reviewStats.avg) : "0"}</span>
+			        <p>${reviewStats.total} đánh giá</p>
+			    </div>
 			</div>
-
-			<!-- REVIEW LIST -->
+			
 			<div class="review-list">
-
-				<div class="review-item">
-					<strong>Nguyễn Văn A</strong>
-					<div class="stars">
-						<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
-						<i class="fa-regular fa-star"></i>
-					</div>
-					<p>Áo đẹp, vải mềm, mặc rất thoải mái 👍</p>
-				</div>
-
-				<div class="review-item">
-					<strong>Trần Thị B</strong>
-					<div class="stars">
-						<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
-						<i class="fa-solid fa-star"></i>
-					</div>
-					<p>Đóng gói cẩn thận, giao hàng nhanh, sẽ mua lại.</p>
-				</div>
-
+			    <c:if test="${empty reviews}">
+			        <p class="text-muted">Chưa có đánh giá nào cho sản phẩm này.</p>
+			    </c:if>
+			    
+			    <c:forEach items="${reviews}" var="r">
+			        <div class="review-item">
+			            <strong>${r.username}</strong>
+			            <div class="stars">
+			                <c:forEach begin="1" end="5" var="i">
+			                    <i class="${i <= r.rating ? 'fa-solid' : 'fa-regular'} fa-star"></i>
+			                </c:forEach>
+			            </div>
+			            <p><c:out value="${r.comment}" /></p> <small class="text-muted"><fmt:formatDate value="${r.createdAt}" pattern="dd/MM/yyyy"/></small>
+			        </div>
+			    </c:forEach>
 			</div>
+			
+			<div class="add-review mt-4 p-3 border rounded bg-white">
+                <h3>Viết đánh giá của bạn</h3>
+                
+                <c:choose>
+                    <c:when test="${not empty sessionScope.user}">
+                        <div class="rating-select mb-2" style="cursor: pointer; font-size: 1.5rem;">
+                            <i class="fa-regular fa-star" data-index="1"></i>
+                            <i class="fa-regular fa-star" data-index="2"></i>
+                            <i class="fa-regular fa-star" data-index="3"></i>
+                            <i class="fa-regular fa-star" data-index="4"></i>
+                            <i class="fa-regular fa-star" data-index="5"></i>
+                        </div>
 
-			<!-- ADD REVIEW -->
-			<div class="add-review">
-				<h3>Viết đánh giá của bạn</h3>
+                        <textarea class="form-control mb-2" rows="3" placeholder="Nhập cảm nhận của bạn về sản phẩm..."></textarea>
 
-				<div class="rating-select">
-					<i class="fa-regular fa-star"></i> <i class="fa-regular fa-star"></i>
-					<i class="fa-regular fa-star"></i> <i class="fa-regular fa-star"></i>
-					<i class="fa-regular fa-star"></i>
-				</div>
-
-				<textarea placeholder="Nhập đánh giá của bạn..."></textarea>
-
-				<button>Gửi đánh giá</button>
-			</div>
-
-		</div>
-
-		<!-- ================= SUGGEST PRODUCTS ================= -->
-		<h2 class="suggest-title">Sản phẩm đề xuất</h2>
-
-		<div class="suggest-grid">
-			<div class="product-card">
-				<img
-					src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/ao-croptop.jpg">
-				<div class="info">
-					<h4>Áo croptop</h4>
-					<div class="price">299.000đ</div>
-				</div>
-			</div>
-
-			<div class="product-card">
-				<img
-					src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/quan-short.jpg">
-				<div class="info">
-					<h4>Quần short nữ</h4>
-					<div class="price">399.000đ</div>
-				</div>
-			</div>
-
-			<div class="product-card">
-				<img
-					src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/vay-yem.jpg">
-				<div class="info">
-					<h4>Váy yếm</h4>
-					<div class="price">599.000đ</div>
-				</div>
-			</div>
-
-			<div class="product-card">
-				<img
-					src="${pageContext.request.contextPath}/assets/images/Female/Female_teenager/ao-khoac.jpg">
-				<div class="info">
-					<h4>Áo khoác nữ</h4>
-					<div class="price">699.000đ</div>
-				</div>
-			</div>
+                        <button type="button" class="btn btn-primary" id="btnSubmitReview">Gửi đánh giá</button>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="alert alert-warning">
+                            Vui lòng <a href="${pageContext.request.contextPath}/user-pages/login.jsp">đăng nhập</a> để đánh giá sản phẩm.
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            
 		</div>
 
 	</div>
@@ -453,6 +367,78 @@ body {
         if (val < 1) val = 1;
         input.value = val;
     }
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const stars = document.querySelectorAll('.rating-select i');
+    const submitBtn = document.getElementById('btnSubmitReview');
+    let selectedRating = 0;
+
+    // 1. Xử lý hiệu ứng chọn sao
+    stars.forEach((star, index) => {
+        star.addEventListener('click', () => {
+            selectedRating = index + 1;
+            stars.forEach((s, i) => {
+                if (i <= index) {
+                    s.classList.replace('fa-regular', 'fa-solid');
+                    s.style.color = "#ffc107";
+                } else {
+                    s.classList.replace('fa-solid', 'fa-regular');
+                    s.style.color = "#ccc";
+                }
+            });
+        });
+    });
+
+    // 2. Xử lý gửi dữ liệu khi bấm nút
+    if (submitBtn) {
+        submitBtn.addEventListener('click', function() {
+            const commentArea = document.querySelector('.add-review textarea');
+            const comment = commentArea.value;
+            const productId = "${p.id}"; 
+            const contextPath = "${pageContext.request.contextPath}";
+
+            if (selectedRating === 0) {
+                alert("Vui lòng chọn số sao đánh giá!");
+                return;
+            }
+            if (comment.trim() === "") {
+                alert("Vui lòng nhập nội dung bình luận!");
+                return;
+            }
+
+            // Gửi dữ liệu bằng POST và URLSearchParams (tránh lỗi EL)
+            const url = contextPath + "/submit-review";
+            const params = new URLSearchParams();
+            params.append('pid', productId);
+            params.append('rating', selectedRating);
+            params.append('comment', comment);
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: params.toString()
+            })
+            .then(res => {
+                if (res.status === 401) {
+                    alert("Phiên đăng nhập hết hạn, vui lòng đăng nhập lại!");
+                    window.location.href = contextPath + "/user-pages/login.jsp";
+                    return;
+                }
+                if (res.ok) {
+                    alert("Cảm ơn bạn đã đánh giá!");
+                    location.reload(); // Tải lại để cập nhật danh sách và điểm trung bình
+                } else {
+                    alert("Có lỗi xảy ra khi gửi đánh giá.");
+                }
+            })
+            .catch(err => console.error("Lỗi Fetch:", err));
+        });
+    }
+});
 </script>
 </body>
 </html>

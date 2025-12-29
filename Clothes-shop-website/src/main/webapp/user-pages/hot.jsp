@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<title>Sản phẩm hot | Shop Quần Áo</title>
+<title>Sản phẩm hot | Fashion Shop</title>
 
 <!-- Google Font -->
 <link
@@ -252,16 +252,8 @@ body {
 
 		<!-- ================= FILTER ================= -->
 		<aside class="filter">
+		<h3>Thời trang thịnh hành</h3>
 		    <h3>Lọc sản phẩm</h3>
-		
-		    <div class="filter-group">
-		        <strong>Loại</strong> 
-		        <label><input type="checkbox" class="filter-type" value="Áo thun"> Áo thun</label> 
-		        <label><input type="checkbox" class="filter-type" value="Áo sơ mi"> Áo sơ mi</label> 
-		        <label><input type="checkbox" class="filter-type" value="Quần jean"> Quần jean</label> 
-		        <label><input type="checkbox" class="filter-type" value="Váy"> Váy</label>
-		    </div>
-		
 		    <div class="filter-group">
 		        <strong>Giới tính</strong> 
 		        <label><input type="radio" name="gender" class="filter-gender" value="NAM"> Nam</label> 
@@ -280,56 +272,37 @@ body {
 
 		<!-- ================= PRODUCTS ================= -->
 		<section class="products">
-
-			<div class="products-grid">
-
-				<!-- PRODUCT -->
-				<div class="product-card" data-type="Áo thun" data-gender="NAM" data-price="199000">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/ao-thun.jpg"
-							alt="Áo thun">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Áo thun basic</h4>
-						<div class="price">199.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail" type="button"
-								onclick="window.location.href='${pageContext.request.contextPath}/user-pages/product-detail.jsp'">Chi
-								tiết</button>
-						</div>
-					</div>
-				</div>
-
-				<!-- COPY thêm nhiều product-card -->
-				<div class="product-card" data-type="Quần jean" data-gender="NAM" data-price="399000">
-					<div class="product-img">
-						<img
-							src="${pageContext.request.contextPath}/assets/images/Male/Male_teenager/quan-jean.jpg"
-							alt="Quần jean">
-						<div class="favorite">
-							<i class="fa-solid fa-heart"></i>
-						</div>
-					</div>
-					<div class="product-info">
-						<h4>Quần jean nam</h4>
-						<div class="price">399.000đ</div>
-						<div class="btn-group">
-							<button class="btn btn-cart">
-								<i class="fa-solid fa-cart-shopping"></i>
-							</button>
-							<button class="btn btn-detail">Chi tiết</button>
-						</div>
-					</div>
-				</div>
-
-			</div>
+		    <div class="products-grid">
+		        <c:forEach items="${hotProducts}" var="p">
+		            <div class="product-card" 
+		                 data-type="${p.categoryName}" 
+		                 data-gender="${p.categoryName}" 
+		                 data-price="${p.price}">
+		                
+		                <div class="product-img">
+		                    <img src="${pageContext.request.contextPath}/assets/uploaded-images/${not empty p.imageUrl ? p.imageUrl : 'default.jpg'}" alt="${p.name}">
+		                    <div class="favorite btn-wishlist" data-id="${p.id}">
+							    <i class="fa-solid fa-heart"></i>
+							</div>
+		                </div>
+		                
+		                <div class="product-info">
+		                    <h4>${p.name}</h4>
+		                    <div class="price"><fmt:formatNumber value="${p.price}" pattern="#,###"/>đ</div>
+		                    
+		                    <div class="btn-group">
+		                        <button class="btn btn-cart add-to-cart-btn" data-id="${p.id}">
+								    <i class="fa-solid fa-cart-shopping"></i>
+								</button>
+		                        <button class="btn btn-detail" type="button"
+		                            onclick="window.location.href='${pageContext.request.contextPath}/product-detail?id=${p.id}'">
+		                            Chi tiết
+		                        </button>
+		                    </div>
+		                </div>
+		            </div>
+		        </c:forEach>
+		    </div>
 		</section>
 
 	</div>

@@ -127,17 +127,74 @@ body {
 .contact-form button:hover {
 	background: #2980b9;
 }
+/* Style cho ô thông báo */
+.alert-box {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	min-width: 300px;
+	padding: 15px 20px;
+	border-radius: 8px;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	z-index: 1000;
+	animation: slideIn 0.5s ease-out;
+}
 
-/* ================= RESPONSIVE ================= */
-@media ( max-width : 768px) {
-	.contact-wrapper {
-		grid-template-columns: 1fr;
-	}
+.success {
+	background-color: #2ecc71;
+} /* Màu xanh lá */
+.error {
+	background-color: #e74c3c;
+} /* Màu đỏ */
+.alert-content {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.alert-content i {
+	font-size: 20px;
+}
+
+.close-btn {
+	background: none;
+	border: none;
+	color: white;
+	font-size: 20px;
+	cursor: pointer;
+	margin-left: 10px;
+}
 }
 </style>
 </head>
 <body>
 	<jsp:include page="/user-pages/navbar.jsp" />
+	<c:if test="${param.success == 'true'}">
+		<div id="success-alert" class="alert-box success">
+			<div class="alert-content">
+				<i class="fa-solid fa-circle-check"></i> <span>Gửi tin nhắn
+					thành công! Chúng tôi sẽ sớm phản hồi bạn.</span>
+			</div>
+			<button class="close-btn"
+				onclick="this.parentElement.style.display='none'">&times;</button>
+		</div>
+	</c:if>
+
+	<c:if test="${param.error == 'true'}">
+		<div id="error-alert" class="alert-box error">
+			<div class="alert-content">
+				<i class="fa-solid fa-circle-exclamation"></i> <span>Gửi thất
+					bại. Vui lòng kiểm tra lại thông tin!</span>
+			</div>
+			<button class="close-btn"
+				onclick="this.parentElement.style.display='none'">&times;</button>
+		</div>
+	</c:if>
+
 	<div class="container">
 
 		<!-- TITLE -->
@@ -179,14 +236,15 @@ body {
 			<div class="contact-form">
 				<h3>Gửi tin nhắn</h3>
 
-				<form action="${pageContext.request.contextPath}/contact" method="post">
+				<form action="${pageContext.request.contextPath}/contact"
+					method="post">
 					<input type="text" name="fullName" placeholder="Họ và tên" required>
 					<input type="email" name="email" placeholder="Email" required>
 					<input type="text" name="phone" placeholder="Số điện thoại">
 					<textarea name="message" placeholder="Nội dung liên hệ..." required></textarea>
 
 					<button type="submit">
-					    <i class="fa-solid fa-paper-plane"></i> Gửi liên hệ
+						<i class="fa-solid fa-paper-plane"></i> Gửi liên hệ
 					</button>
 				</form>
 			</div>

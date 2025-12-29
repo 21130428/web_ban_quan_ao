@@ -57,7 +57,7 @@ public class LoginController extends HttpServlet {
 		if ("ADMIN".equals(user.getRole())) {
 			response.sendRedirect(request.getContextPath() + "/admin/manage-product");
 		} else {
-			response.sendRedirect(request.getContextPath() + "/user-pages/home.jsp");
+			response.sendRedirect(request.getContextPath() + "/home");
 		}
 
 	}

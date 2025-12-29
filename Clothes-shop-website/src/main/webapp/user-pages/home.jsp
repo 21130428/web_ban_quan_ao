@@ -199,18 +199,24 @@ section {
 	opacity: 1;
 }
 
-.btn-cart {
-	background: #fff;
-	color: #111;
-	padding: 12px 26px;
-	border-radius: 30px;
-	font-weight: 600;
-	transition: 0.3s ease;
+.btn-detail {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: 0.3s;
 }
 
-.btn-cart:hover {
-	background: #111;
-	color: #fff;
+.btn-detail:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+.btn-detail i {
+    margin-right: 5px;
 }
 
 .product-info {
@@ -416,263 +422,48 @@ section {
 	</section>
 
 	<section class="products">
-		<h2 class="section-title">Sản phẩm nổi bật</h2>
-
-		<div class="product-list">
-			<div class="product-card">
-				<div class="product-image">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-cardigan.jpg">
-					<span class="badge">NEW</span> <i class="fa fa-heart wishlist"></i>
-
-					<div class="product-actions">
-						<a href="#" class="btn-cart">Thêm vào giỏ</a>
-					</div>
-				</div>
-
-				<div class="product-info">
-					<span class="category">Nam</span>
-					<h3>Áo Cardigan</h3>
-
-					<div class="rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star-half-alt"></i> <span>(124)</span>
-					</div>
-
-					<div class="colors">
-						<span class="color black"></span> <span class="color beige"></span>
-						<span class="color gray"></span>
-					</div>
-
-					<p class="price">299.000đ</p>
-				</div>
-			</div>
-
-
-			<div class="product-card">
-				<div class="product-image">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-cardigan.jpg">
-					<span class="badge">NEW</span> <i class="fa fa-heart wishlist"></i>
-
-					<div class="product-actions">
-						<a href="#" class="btn-cart">Thêm vào giỏ</a>
-					</div>
-				</div>
-
-				<div class="product-info">
-					<span class="category">Nam</span>
-					<h3>Áo Cardigan</h3>
-
-					<div class="rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star-half-alt"></i> <span>(124)</span>
-					</div>
-
-					<div class="colors">
-						<span class="color black"></span> <span class="color beige"></span>
-						<span class="color gray"></span>
-					</div>
-
-					<p class="price">299.000đ</p>
-				</div>
-			</div>
-
-
-			<div class="product-card">
-				<div class="product-image">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-cardigan.jpg">
-					<span class="badge">NEW</span> <i class="fa fa-heart wishlist"></i>
-
-					<div class="product-actions">
-						<a href="#" class="btn-cart">Thêm vào giỏ</a>
-					</div>
-				</div>
-
-				<div class="product-info">
-					<span class="category">Nam</span>
-					<h3>Áo Cardigan</h3>
-
-					<div class="rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star-half-alt"></i> <span>(124)</span>
-					</div>
-
-					<div class="colors">
-						<span class="color black"></span> <span class="color beige"></span>
-						<span class="color gray"></span>
-					</div>
-
-					<p class="price">299.000đ</p>
-				</div>
-			</div>
-
-			<div class="product-card">
-				<div class="product-image">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-cardigan.jpg">
-					<span class="badge">NEW</span> <i class="fa fa-heart wishlist"></i>
-
-					<div class="product-actions">
-						<a href="#" class="btn-cart">Thêm vào giỏ</a>
-					</div>
-				</div>
-
-				<div class="product-info">
-					<span class="category">Nam</span>
-					<h3>Áo Cardigan</h3>
-
-					<div class="rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star-half-alt"></i> <span>(124)</span>
-					</div>
-
-					<div class="colors">
-						<span class="color black"></span> <span class="color beige"></span>
-						<span class="color gray"></span>
-					</div>
-
-					<p class="price">299.000đ</p>
-				</div>
-			</div>
-
-
-		</div>
+	    <h2 class="section-title">Sản phẩm nổi bật</h2>
+	    <div class="product-list">
+	        <c:forEach items="${listBest}" var="p">
+	            <div class="product-card">
+	                <div class="product-image">
+	                    <%-- Nếu không có ảnh thì hiện ảnh mặc định --%>
+	                    <img src="${pageContext.request.contextPath}/assets/uploaded-images/${not empty p.imageUrl ? p.imageUrl : 'banner1.jpg'}">
+	                    <span class="badge" style="background: #ff4757;">HOT</span>
+	                    <div class="product-actions">
+	                       <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}" class="btn-detail"> <i class="fa fa-eye"></i> Xem chi tiết</a>
+	                    </div>
+	                </div>
+	                <div class="product-info">
+	                    <span class="category">${p.categoryName}</span>
+	                    <h3>${p.name}</h3>
+	                    <p class="price"><fmt:formatNumber value="${p.price}" pattern="#,###"/>đ</p>
+	                </div>
+	            </div>
+	        </c:forEach>
+	    </div>
 	</section>
-
-
+	
 	<section class="products">
-		<h2 class="section-title">Sản phẩm mới</h2>
-		<div class="product-list">
-			<div class="product-card">
-				<div class="product-image">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-cardigan.jpg">
-					<span class="badge">NEW</span> <i class="fa fa-heart wishlist"></i>
-
-					<div class="product-actions">
-						<a href="#" class="btn-cart">Thêm vào giỏ</a>
-					</div>
-				</div>
-
-				<div class="product-info">
-					<span class="category">Nam</span>
-					<h3>Áo Cardigan</h3>
-
-					<div class="rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star-half-alt"></i> <span>(124)</span>
-					</div>
-
-					<div class="colors">
-						<span class="color black"></span> <span class="color beige"></span>
-						<span class="color gray"></span>
-					</div>
-
-					<p class="price">299.000đ</p>
-				</div>
-			</div>
-
-
-			<div class="product-card">
-				<div class="product-image">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-cardigan.jpg">
-					<span class="badge">NEW</span> <i class="fa fa-heart wishlist"></i>
-
-					<div class="product-actions">
-						<a href="#" class="btn-cart">Thêm vào giỏ</a>
-					</div>
-				</div>
-
-				<div class="product-info">
-					<span class="category">Nam</span>
-					<h3>Áo Cardigan</h3>
-
-					<div class="rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star-half-alt"></i> <span>(124)</span>
-					</div>
-
-					<div class="colors">
-						<span class="color black"></span> <span class="color beige"></span>
-						<span class="color gray"></span>
-					</div>
-
-					<p class="price">299.000đ</p>
-				</div>
-			</div>
-
-
-			<div class="product-card">
-				<div class="product-image">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-cardigan.jpg">
-					<span class="badge">NEW</span> <i class="fa fa-heart wishlist"></i>
-
-					<div class="product-actions">
-						<a href="#" class="btn-cart">Thêm vào giỏ</a>
-					</div>
-				</div>
-
-				<div class="product-info">
-					<span class="category">Nam</span>
-					<h3>Áo Cardigan</h3>
-
-					<div class="rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star-half-alt"></i> <span>(124)</span>
-					</div>
-
-					<div class="colors">
-						<span class="color black"></span> <span class="color beige"></span>
-						<span class="color gray"></span>
-					</div>
-
-					<p class="price">299.000đ</p>
-				</div>
-			</div>
-
-			<div class="product-card">
-				<div class="product-image">
-					<img
-						src="${pageContext.request.contextPath}/assets/images/Male/Male_adult/ao-cardigan.jpg">
-					<span class="badge">NEW</span> <i class="fa fa-heart wishlist"></i>
-
-					<div class="product-actions">
-						<a href="#" class="btn-cart">Thêm vào giỏ</a>
-					</div>
-				</div>
-
-				<div class="product-info">
-					<span class="category">Nam</span>
-					<h3>Áo Cardigan</h3>
-
-					<div class="rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star-half-alt"></i> <span>(124)</span>
-					</div>
-
-					<div class="colors">
-						<span class="color black"></span> <span class="color beige"></span>
-						<span class="color gray"></span>
-					</div>
-
-					<p class="price">299.000đ</p>
-				</div>
-			</div>
-
-
-		</div>
+	    <h2 class="section-title">Sản phẩm mới</h2>
+	    <div class="product-list">
+	        <c:forEach items="${listNew}" var="p">
+	            <div class="product-card">
+	                <div class="product-image">
+	                    <img src="${pageContext.request.contextPath}/assets/uploaded-images/${not empty p.imageUrl ? p.imageUrl : 'default.jpg'}">
+	                    <span class="badge">NEW</span>
+	                    <div class="product-actions">
+	                        <a href="${pageContext.request.contextPath}/product-detail?id=${p.id}" class="btn-detail"> <i class="fa fa-eye"></i> Xem chi tiết</a>
+	                    </div>
+	                </div>
+	                <div class="product-info">
+	                    <span class="category">${p.categoryName}</span>
+	                    <h3>${p.name}</h3>
+	                    <p class="price"><fmt:formatNumber value="${p.price}" pattern="#,###"/>đ</p>
+	                </div>
+	            </div>
+	        </c:forEach>
+	    </div>
 	</section>
 
 	<jsp:include page="/user-pages/footer.jsp" />

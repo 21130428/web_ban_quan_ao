@@ -5,21 +5,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import model.Product;
 
 import java.io.IOException;
+import java.util.List;
+
+import dao.ProductDao;
 
 /**
- * Servlet implementation class LogoutServlet
+ * Servlet implementation class HotProductController
  */
-@WebServlet("/logout")
-public class LogoutServlet extends HttpServlet {
+@WebServlet("/hot-products")
+public class HotProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutServlet() {
+    public HotProductController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,11 +32,10 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
-		response.sendRedirect(request.getContextPath() + "/home");
+		ProductDao dao = new ProductDao();
+        List<Product> list = dao.getAllHotProducts();
+        
+        request.setAttribute("hotProducts", list);
+        request.getRequestDispatcher("/user-pages/hot.jsp").forward(request, response);
 	}
-
 }

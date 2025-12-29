@@ -3,7 +3,7 @@
   <display-name>Clothes-shop-website</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
-    <welcome-file>user-pages/home.jsp</welcome-file>
+    <welcome-file>home</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>default.html</welcome-file>
@@ -238,5 +238,64 @@
   <servlet-mapping>
     <servlet-name>OrderDetailController</servlet-name>
     <url-pattern>/OrderDetailController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HomeController</display-name>
+    <servlet-name>HomeController</servlet-name>
+    <servlet-class>controller.HomeController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeController</servlet-name>
+    <url-pattern>/HomeController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HotProductController</display-name>
+    <servlet-name>HotProductController</servlet-name>
+    <servlet-class>controller.HotProductController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HotProductController</servlet-name>
+    <url-pattern>/HotProductController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminUserController</display-name>
+    <servlet-name>AdminUserController</servlet-name>
+    <servlet-class>controller.AdminUserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminUserController</servlet-name>
+    <url-pattern>/AdminUserController</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <display-name>AdminFilter</display-name>
+    <filter-name>AdminFilter</filter-name>
+    <filter-class>controller.AdminFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/AdminFilter</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SubmitReviewController</display-name>
+    <servlet-name>SubmitReviewController</servlet-name>
+    <servlet-class>controller.SubmitReviewController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SubmitReviewController</servlet-name>
+    <url-pattern>/SubmitReviewController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminReviewController</display-name>
+    <servlet-name>AdminReviewController</servlet-name>
+    <servlet-class>controller.AdminReviewController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminReviewController</servlet-name>
+    <url-pattern>/AdminReviewController</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -222,10 +222,10 @@
 	                                </button>
 	                                
 	                                <%-- Nút xem chi tiết sản phẩm --%>
-	                                <button class="btn btn-detail" 
-	                                        onclick="window.location.href='detail?pid=${p.id}'">
-	                                    Chi tiết
-	                                </button>
+	                                <button class="btn btn-detail" type="button"
+									    onclick="window.location.href='${pageContext.request.contextPath}/product-detail?id=${p.id}'">
+									    Chi tiết
+									</button>
 	                            </div>
 	                        </div>
 	                    </div>

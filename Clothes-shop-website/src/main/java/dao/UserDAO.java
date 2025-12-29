@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.User;
 
@@ -139,6 +141,40 @@ public class UserDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	// Lấy tất cả người dùng
+	public List<User> getAllUsers() {
+		List<User> list = new ArrayList<>();
+		String sql = "SELECT * FROM users ORDER BY created_at DESC";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				User u = new User();
+				u.setUserId(rs.getInt("user_id"));
+				u.setUsername(rs.getString("username"));
+				u.setEmail(rs.getString("email"));
+				u.setRole(rs.getString("role"));
+				u.setCreatedAt(rs.getTimestamp("created_at"));
+				list.add(u);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	// Cập nhật quyền ADMIN/USER
+	public boolean updateRole(int userId, String newRole) {
+		String sql = "UPDATE users SET role = ? WHERE user_id = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, newRole);
+			ps.setInt(2, userId);
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }
