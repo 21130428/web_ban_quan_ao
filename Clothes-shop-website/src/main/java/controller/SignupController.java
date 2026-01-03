@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import dao.UserDAO;
+import util.PasswordUtil;
 
 /**
  * Servlet implementation class SignupController
@@ -65,7 +66,8 @@ public class SignupController extends HttpServlet {
 		    return;
 		}
 		// đăng ký
-		boolean success = userDAO.register(username, email, password);
+		String hashedPassword = PasswordUtil.hashPassword(password);
+		boolean success = userDAO.register(username, email, hashedPassword);
 		if (success) {
 			response.sendRedirect(request.getContextPath() + "/user-pages/login.jsp");
 		} else {

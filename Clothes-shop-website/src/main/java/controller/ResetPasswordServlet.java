@@ -34,8 +34,20 @@ public class ResetPasswordServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String token = request.getParameter("token");
+		if (token == null || token.isEmpty()) {
+			response.sendRedirect(request.getContextPath() + "/login?error=invalid_token");
+			return;
+		}
+		User user = userDAO.findByToken(token);
+		if (user == null || user.getTokenExpiry().toLocalDateTime().isBefore(LocalDateTime.now())) {
+			request.setAttribute("error", "Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn!");
+			request.getRequestDispatcher("/user-pages/login.jsp").forward(request, response);
+			return;
+		}
+		// token hợp lệ → hiển thị form
+		request.setAttribute("token", token);
+		request.getRequestDispatcher("/user-pages/reset-password.jsp").forward(request, response);
 	}
 
 	/**

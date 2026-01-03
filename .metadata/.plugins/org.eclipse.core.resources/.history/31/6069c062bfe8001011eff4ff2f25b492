@@ -1,0 +1,36 @@
+package controller;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.*;
+import java.io.IOException;
+import model.User;
+
+@WebFilter("/admin/*")
+public class AdminFilter implements Filter {
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+
+		HttpSession session = req.getSession(false);
+		User user = (session != null) ? (User) session.getAttribute("user") : null;
+
+		// Chưa đăng nhập
+		if (user == null) {
+			res.sendRedirect(req.getContextPath() + "/user-pages/login.jsp");
+			return;
+		}
+
+		// Không phải ADMIN
+		if (!"ADMIN".equals(user.getRole())) {
+			res.sendRedirect(req.getContextPath() + "/home");
+			return;
+		}
+
+		// Là ADMIN → cho đi tiếp
+		chain.doFilter(request, response);
+	}
+}

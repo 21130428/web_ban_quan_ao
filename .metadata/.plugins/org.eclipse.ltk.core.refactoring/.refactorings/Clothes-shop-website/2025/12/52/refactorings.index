@@ -1,0 +1,18 @@
+1766748764940	Rename type 'LoginServlet'
+1766748837166	Delete element
+1766748845142	Rename type 'LoginControlle'
+1766752300726	Delete elements
+1766752699170	Copy package
+1766752703156	Delete element
+1766752706797	Move 'controller' to 'src'
+1766752819139	Move 'dao' to 'src'
+1766752821277	Move 'util' to 'src'
+1766752828468	Move 'model' to 'src'
+1766752870744	Move 'admin-pages' to 'WebContent'
+1766752873383	Move 'assets' to 'WebContent'
+1766752875251	Move 'META-INF' to 'WebContent'
+1766752876821	Move 'user-pages' to 'WebContent'
+1766752878499	Move 'WEB-INF' to 'WebContent'
+1766752885182	Delete element
+1766753057575	Delete element
+1766754540494	Delete elements

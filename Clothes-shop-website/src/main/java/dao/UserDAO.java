@@ -59,26 +59,6 @@ public class UserDAO {
 		return false;
 	}
 
-	public User login(String email, String password) {
-		String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, email);
-			ps.setString(2, password);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				User user = new User();
-				user.setUserId(rs.getInt("user_id"));
-				user.setUsername(rs.getString("username"));
-				user.setEmail(rs.getString("email"));
-				user.setRole(rs.getString("role"));
-				return user;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	public User findByEmail(String email) {
 		String sql = "SELECT * FROM users WHERE email = ?";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {

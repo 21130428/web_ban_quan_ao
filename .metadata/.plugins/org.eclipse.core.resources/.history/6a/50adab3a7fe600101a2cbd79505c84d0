@@ -1,0 +1,65 @@
+package controller;
+
+import javax.servlet.annotation.WebServlet;
+
+@WebServlet("/change-password")
+public class ChangePasswordController extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/user-pages/change-password.jsp")
+               .forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession(false);
+
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect(request.getContextPath() + "/user-pages/login.jsp");
+            return;
+        }
+
+        User user = (User) session.getAttribute("user");
+
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        String confirm = request.getParameter("confirmPassword");
+
+        // 1. Check mật khẩu cũ
+        if (!PasswordUtil.checkPassword(oldPassword, user.getPassword())) {
+            request.setAttribute("error", "Mật khẩu hiện tại không đúng");
+            doGet(request, response);
+            return;
+        }
+
+        // 2. Check confirm
+        if (!newPassword.equals(confirm)) {
+            request.setAttribute("error", "Mật khẩu xác nhận không khớp");
+            doGet(request, response);
+            return;
+        }
+
+        // 3. Regex mật khẩu
+        String regex = "^(?=.*[A-Za-z])(?=.*\\d).{6,}$";
+        if (!newPassword.matches(regex)) {
+            request.setAttribute("error",
+                "Mật khẩu phải >= 6 ký tự và chứa chữ + số");
+            doGet(request, response);
+            return;
+        }
+
+        // 4. Hash mật khẩu mới
+        String hashed = PasswordUtil.hashPassword(newPassword);
+
+        // 5. Update DB
+        UserDAO userDAO = new UserDAO();
+        userDAO.updatePassword(user.getEmail(), hashed);
+
+        // 6. Logout để login lại
+        session.invalidate();
+        response.sendRedirect(request.getContextPath() + "/user-pages/login.jsp");
+    }
+}
