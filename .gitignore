@@ -2,12 +2,6 @@
 /build/
 /target/
 *.class
-bin/
-
-# Eclipse / IDE
-.classpath
-.project
-.settings/
 
 # Tomcat/Eclipse Servers
 Servers/
