@@ -33,7 +33,6 @@ public class SubmitReviewController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/user-pages/login.jsp");
             return;
         }
-
         int pid = Integer.parseInt(request.getParameter("pid"));
         int rating = Integer.parseInt(request.getParameter("rating"));
         String comment = request.getParameter("comment");

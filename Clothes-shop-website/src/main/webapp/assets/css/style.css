@@ -140,6 +140,43 @@ header {
 	cursor: pointer;
 }
 
+/* =========================
+   ✅ CART BADGE (BƯỚC 5)
+   ========================= */
+
+/* Nếu bạn bọc icon giỏ trong <a class="cart-link">...</a> */
+.cart-link {
+	position: relative;
+	display: inline-block;
+}
+
+/* Badge số lượng giỏ */
+.cart-badge {
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	background-color: #ff4757;
+	color: white;
+	font-size: 11px;
+	padding: 2px 6px;
+	border-radius: 50%;
+	font-weight: bold;
+	border: 2px solid white;
+	line-height: 1;
+	min-width: 18px;
+	height: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Nếu số lượng = 0 bạn muốn ẩn badge, có thể dùng class này (tuỳ chọn) */
+/*
+.cart-badge.is-zero {
+	display: none;
+}
+*/
+
 /* AUTH PAGES */
 .auth-body {
 	background: linear-gradient(120deg, #f5f6f8, #ffffff);
@@ -238,7 +275,7 @@ header {
 	margin-right: 15px;
 	cursor: pointer;
 	padding-bottom: 15px;
-    margin-bottom: -15px;
+	margin-bottom: -15px;
 }
 
 .badge-notify {
@@ -255,13 +292,13 @@ header {
 }
 
 .notify-dropdown::before {
-    content: "";
-    position: absolute;
-    top: -20px;
-    right: 0;
-    width: 100%;
-    height: 20px;
-    background: transparent;
+	content: "";
+	position: absolute;
+	top: -20px;
+	right: 0;
+	width: 100%;
+	height: 20px;
+	background: transparent;
 }
 
 /* Dropdown thông báo */
@@ -323,73 +360,153 @@ header {
 
 /* Nền mờ bao phủ toàn màn hình */
 .custom-modal {
-    display: none; 
-    position: fixed; 
-    z-index: 9999; 
-    left: 0; top: 0;
-    width: 100%; height: 100%; 
-    background-color: rgba(0,0,0,0.6);
-    backdrop-filter: blur(4px); /* Làm mờ hậu cảnh */
+	display: none;
+	position: fixed;
+	z-index: 9999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(4px); /* Làm mờ hậu cảnh */
 }
 
 /* Khung nội dung trắng chính giữa */
 .modal-content-card {
-    background-color: #fff;
-    margin: 10% auto;
-    width: 90%;
-    max-width: 450px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    animation: slideDown 0.3s ease-out;
+	background-color: #fff;
+	margin: 10% auto;
+	width: 90%;
+	max-width: 450px;
+	border-radius: 12px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	animation: slideDown 0.3s ease-out;
 }
 
 /* Hiệu ứng hiện ra */
 @keyframes slideDown {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+	from { transform: translateY(-50px); opacity: 0; }
+	to { transform: translateY(0); opacity: 1; }
 }
 
 .modal-header-custom {
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	padding: 15px 20px;
+	border-bottom: 1px solid #eee;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .modal-header-custom h3 {
-    margin: 0; color: #333; font-size: 1.2rem;
+	margin: 0;
+	color: #333;
+	font-size: 1.2rem;
 }
 
 .close-btn {
-    font-size: 28px; cursor: pointer; color: #aaa;
+	font-size: 28px;
+	cursor: pointer;
+	color: #aaa;
 }
 
-.close-btn:hover { color: #000; }
+.close-btn:hover {
+	color: #000;
+}
 
 .modal-body-custom {
-    padding: 20px;
+	padding: 20px;
 }
 
 .info-meta {
-    font-size: 0.85rem; color: #888; margin-bottom: 15px;
+	font-size: 0.85rem;
+	color: #888;
+	margin-bottom: 15px;
 }
 
 .content-text {
-    line-height: 1.6; color: #444; font-size: 1rem;
+	line-height: 1.6;
+	color: #444;
+	font-size: 1rem;
 }
 
 .modal-footer-custom {
-    padding: 15px 20px;
-    text-align: right;
-    border-top: 1px solid #eee;
+	padding: 15px 20px;
+	text-align: right;
+	border-top: 1px solid #eee;
 }
 
 .btn-done {
-    background-color: #28a745;
-    color: white; border: none;
-    padding: 8px 20px; border-radius: 5px;
-    cursor: pointer;
+	background-color: #28a745;
+	color: white;
+	border: none;
+	padding: 8px 20px;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
-.btn-done:hover { background-color: #218838; }
+.btn-done:hover {
+	background-color: #218838;
+}
+/* ===== ICON BUTTON TRÊN NAVBAR ===== */
+.nav-icons{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* nút icon tròn */
+.nav-icon-btn{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.10);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+/* icon */
+.nav-icon-btn i{
+  font-size:18px;
+  color:#111;
+  transition: transform .18s ease, color .18s ease;
+}
+
+/* hover mượt */
+.nav-icon-btn:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.14);
+  border-color: rgba(231,76,60,0.35);
+}
+.nav-icon-btn:hover i{
+  transform: scale(1.08);
+}
+
+/* tim màu đỏ */
+.nav-icon-btn.heart i{ color:#e74c3c; }
+
+/* badge số lượng */
+.nav-badge{
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  min-width:18px;
+  height:18px;
+  padding:0 6px;
+  border-radius:999px;
+  background:#ff4757;
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #fff;
+  line-height:1;
+}
+
+/* ẩn badge nếu =0 (tuỳ chọn) */
+.nav-badge.is-zero{ display:none; }

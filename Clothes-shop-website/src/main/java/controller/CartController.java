@@ -21,98 +21,101 @@ import dao.ProductDao;
  */
 @WebServlet("/cart-controller")
 public class CartController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public CartController() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    private boolean isAjax(HttpServletRequest req) {
+        return "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
+    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String action = request.getParameter("action");
-		String pidRaw = request.getParameter("pid");
+    private Integer tryParseInt(String s) {
+        try { return Integer.parseInt(s); } catch (Exception e) { return null; }
+    }
 
-		// Kiểm tra pid có tồn tại không để tránh lỗi NumberFormatException
-		if (pidRaw == null) {
-			response.sendRedirect("user-pages/cart.jsp");
-			return;
-		}
+    @SuppressWarnings("unchecked")
+    private Map<Integer, CartItem> getCart(HttpSession session) {
+        Map<Integer, CartItem> cart = (Map<Integer, CartItem>) session.getAttribute("cart");
+        if (cart == null) cart = new HashMap<>();
+        return cart;
+    }
 
-		int pid = Integer.parseInt(pidRaw);
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
+    private int totalQty(Map<Integer, CartItem> cart) {
+        int total = 0;
+        for (CartItem i : cart.values()) total += i.getQuantity();
+        return total;
+    }
 
-		// Nếu chưa đăng nhập, trả về mã lỗi 401 nếu là Ajax hoặc redirect nếu là thường
-		if (user == null) {
-			String isAjax = request.getHeader("X-Requested-With");
-			if ("XMLHttpRequest".equals(isAjax)) {
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				return;
-			}
-			response.sendRedirect("login.jsp");
-			return;
-		}
+    private void unauthorized(HttpServletRequest req, HttpServletResponse resp, boolean ajax) throws IOException {
+        if (ajax) { resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED); return; }
+        resp.sendRedirect(req.getContextPath() + "/user-pages/login.jsp");
+    }
 
-		// Lấy giỏ hàng từ session
-		Map<Integer, CartItem> cart = (Map<Integer, CartItem>) session.getAttribute("cart");
-		if (cart == null) {
-			cart = new HashMap<>();
-		}
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+        if (action == null) action = "view";
 
-		ProductDao dao = new ProductDao();
+        boolean ajax = isAjax(req);
+        HttpSession session = req.getSession();
 
-		if ("add".equals(action)) {
-			if (cart.containsKey(pid)) {
-				cart.get(pid).setQuantity(cart.get(pid).getQuantity() + 1);
-			} else {
-				Product p = dao.getProductById(pid);
-				if (p != null) {
-					cart.put(pid, new CartItem(p, 1, p.getPrice()));
-				}
-			}
-		} else if ("update".equals(action)) {
-			String modRaw = request.getParameter("mod");
-			if (modRaw != null) {
-				int mod = Integer.parseInt(modRaw);
-				CartItem item = cart.get(pid);
-				if (item != null) {
-					int newQty = item.getQuantity() + mod;
-					if (newQty > 0)
-						item.setQuantity(newQty);
-					else
-						cart.remove(pid);
-				}
-			}
-		} else if ("delete".equals(action)) {
-			cart.remove(pid);
-		}
+        // View cart
+        if ("view".equals(action)) {
+            resp.sendRedirect(req.getContextPath() + "/user-pages/cart.jsp");
+            return;
+        }
 
-		// Cập nhật lại session
-		session.setAttribute("cart", cart);
+        // Require login for modifying cart
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            unauthorized(req, resp, ajax);
+            return;
+        }
 
-		// KIỂM TRA LOẠI REQUEST ĐỂ PHẢN HỒI
-		String isAjax = request.getHeader("X-Requested-With");
-		if ("XMLHttpRequest".equals(isAjax)) {
-			// Nếu là Ajax (nút bấm ở trang chủ/wishlist), trả về số lượng tổng để cập nhật
-			// icon giỏ hàng
-			int totalItems = 0;
-			for (CartItem item : cart.values()) {
-				totalItems += item.getQuantity();
-			}
-			response.setContentType("text/plain");
-			response.getWriter().write(String.valueOf(totalItems));
-		} else {
-			// Nếu là request bình thường (thẻ a hoặc redirect), quay về trang giỏ hàng
-			response.sendRedirect("user-pages/cart.jsp");
-		}
-	}
+        Integer pid = tryParseInt(req.getParameter("pid"));
+        if (pid == null) {
+            resp.sendError(400, "Missing/invalid pid");
+            return;
+        }
+
+        Map<Integer, CartItem> cart = getCart(session);
+        ProductDao dao = new ProductDao();
+
+        switch (action) {
+            case "add": {
+                CartItem item = cart.get(pid);
+                if (item != null) {
+                    item.setQuantity(item.getQuantity() + 1);
+                } else {
+                    Product p = dao.getProductById(pid);
+                    if (p != null) cart.put(pid, new CartItem(p, 1, p.getPrice()));
+                }
+                break;
+            }
+            case "update": {
+                Integer mod = tryParseInt(req.getParameter("mod"));
+                if (mod == null) { resp.sendError(400, "Missing/invalid mod"); return; }
+                CartItem item = cart.get(pid);
+                if (item != null) {
+                    int newQty = item.getQuantity() + mod;
+                    if (newQty > 0) item.setQuantity(newQty);
+                    else cart.remove(pid);
+                }
+                break;
+            }
+            case "delete":
+                cart.remove(pid);
+                break;
+
+            default:
+                resp.sendError(400, "Unknown action");
+                return;
+        }
+
+        session.setAttribute("cart", cart);
+
+        if (ajax) {
+            resp.setContentType("text/plain; charset=UTF-8");
+            resp.getWriter().write(String.valueOf(totalQty(cart)));
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/user-pages/cart.jsp");
+        }
+    }
 }

@@ -27,6 +27,7 @@ body {
 	background: #f6f6f6;
 }
 
+/* ====== LAYOUT ====== */
 .container {
 	display: grid;
 	grid-template-columns: 250px 1fr;
@@ -34,60 +35,57 @@ body {
 	padding: 20px;
 }
 
-/* ================= FAVORITE (HEART) ================= */
-.favorite {
+/* =========================================================
+   ✅ HIỆU ỨNG Ô NỔI / CARD (GIỐNG ẢNH)
+   Áp dụng cho: .filter, .products, .product-card
+   ========================================================= */
+.filter, .products, .product-card {
+	background: #fff;
+	border-radius: 18px;
+	border: 1px solid rgba(0,0,0,0.06);
+	box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+	position: relative;
+	overflow: hidden;
+	transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+	will-change: transform;
+}
+
+/* glow nhẹ phía sau */
+.filter::before, .products::before, .product-card::before {
+	content: "";
 	position: absolute;
-	top: 10px;
-	right: 10px;
-	background: white;
-	padding: 8px;
-	border-radius: 50%;
-	cursor: pointer;
-	color: #ccc;
-	transition: all 0.3s ease;
+	inset: -40px;
+	background: radial-gradient(circle at 30% 20%,
+		rgba(255,71,87,0.18),
+		transparent 60%);
+	opacity: 0;
+	transition: opacity .22s ease;
+	pointer-events: none;
+	z-index: 0;
 }
 
-.favorite:hover {
-	background: #e74c3c;
-	color: white;
-	transform: scale(1.15);
-	box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+/* đảm bảo nội dung nằm trên glow */
+.filter > *, .products > *, .product-card > * {
+	position: relative;
+	z-index: 1;
 }
 
-/* ================= BUTTON COMMON ================= */
-.btn {
-	transition: all 0.3s ease;
+/* hover nhấc lên */
+.filter:hover, .products:hover, .product-card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 16px 42px rgba(0,0,0,0.16);
+	border-color: rgba(255,71,87,0.30);
 }
-
-/* ================= ADD TO CART ================= */
-.btn-cart {
-	background: #2ecc71;
-	color: white;
+.filter:hover::before, .products:hover::before, .product-card:hover::before {
+	opacity: 1;
 }
-
-.btn-cart:hover {
-	background: #27ae60;
-	transform: translateY(-3px);
-	box-shadow: 0 5px 15px rgba(46, 204, 113, 0.5);
-}
-
-/* ================= DETAIL BUTTON ================= */
-.btn-detail {
-	background: #3498db;
-	color: white;
-}
-
-.btn-detail:hover {
-	background: #2980b9;
-	transform: translateY(-3px);
-	box-shadow: 0 5px 15px rgba(52, 152, 219, 0.5);
+.filter:active, .products:active, .product-card:active {
+	transform: translateY(-2px);
 }
 
 /* ================= FILTER ================= */
 .filter {
-	background: white;
 	padding: 20px;
-	border-radius: 10px;
 }
 
 .filter h3 {
@@ -106,16 +104,7 @@ body {
 
 /* ================= PRODUCTS ================= */
 .products {
-	background: white;
 	padding: 20px;
-	border-radius: 10px;
-}
-
-.products-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 20px;
 }
 
 .products-grid {
@@ -124,12 +113,10 @@ body {
 	gap: 20px;
 }
 
+/* ================= PRODUCT CARD ================= */
 .product-card {
-	background: #fff;
-	border-radius: 10px;
-	overflow: hidden;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-	transition: transform 0.3s;
+	border-radius: 18px; /* card bo hơn */
+	/* shadow đã có ở trên, giữ đồng nhất */
 }
 
 .product-img {
@@ -140,19 +127,31 @@ body {
 	width: 100%;
 	height: 280px;
 	object-fit: cover;
+	display: block;
 }
 
+/* ================= FAVORITE (HEART) ================= */
 .favorite {
 	position: absolute;
 	top: 10px;
 	right: 10px;
-	background: white;
+	background: #fff;
 	padding: 8px;
 	border-radius: 50%;
 	cursor: pointer;
 	color: #e74c3c;
+	transition: all 0.25s ease;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
+.favorite:hover {
+	background: #e74c3c;
+	color: #fff;
+	transform: scale(1.12);
+	box-shadow: 0 10px 22px rgba(231, 76, 60, 0.35);
+}
+
+/* ================= INFO ================= */
 .product-info {
 	padding: 15px;
 }
@@ -168,6 +167,7 @@ body {
 	margin-bottom: 10px;
 }
 
+/* ================= BUTTONS ================= */
 .btn-group {
 	display: flex;
 	gap: 10px;
@@ -177,138 +177,115 @@ body {
 	flex: 1;
 	padding: 8px;
 	border: none;
-	border-radius: 5px;
+	border-radius: 10px;
 	cursor: pointer;
 	font-size: 14px;
+	transition: all 0.25s ease;
 }
 
+/* ADD TO CART */
 .btn-cart {
 	background: #2ecc71;
 	color: white;
 }
+.btn-cart:hover {
+	background: #27ae60;
+	transform: translateY(-3px);
+	box-shadow: 0 5px 15px rgba(46, 204, 113, 0.45);
+}
 
+/* DETAIL */
 .btn-detail {
 	background: #3498db;
 	color: white;
 }
-
-/* ================= PRODUCTS HEADER ================= */
-.products-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 25px;
-	padding-bottom: 10px;
-	border-bottom: 2px solid #eee;
+.btn-detail:hover {
+	background: #2980b9;
+	transform: translateY(-3px);
+	box-shadow: 0 5px 15px rgba(52, 152, 219, 0.45);
 }
 
-/* TITLE */
-.products-header h2 {
-	font-size: 22px;
-	font-weight: 600;
-	color: #333;
-	position: relative;
-}
-
-/* underline nhẹ cho tiêu đề */
-.products-header h2::after {
-	content: "";
-	width: 60px;
-	height: 3px;
-	background: #e67e22;
-	position: absolute;
-	left: 0;
-	bottom: -8px;
-	border-radius: 2px;
-}
-
-/* ================= SORT SELECT ================= */
-.products-header select {
-	padding: 8px 15px;
-	border-radius: 20px;
-	border: 1px solid #ddd;
-	font-size: 14px;
-	cursor: pointer;
-	background: #fff;
-	outline: none;
-	transition: all 0.3s ease;
-}
-
-/* hover */
-.products-header select:hover {
-	border-color: #3498db;
-}
-
-/* focus */
-.products-header select:focus {
-	border-color: #3498db;
-	box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+/* (tuỳ chọn) hover card nhẹ thêm cho cảm giác mượt */
+.product-card:hover .product-img img {
+	transform: scale(1.02);
+	transition: transform .22s ease;
 }
 </style>
 </head>
+
 <body>
 	<jsp:include page="/user-pages/navbar.jsp" />
+
 	<div class="container">
 
 		<!-- ================= FILTER ================= -->
 		<aside class="filter">
-		<h3>Thời trang thịnh hành</h3>
-		    <h3>Lọc sản phẩm</h3>
-		    <div class="filter-group">
-		        <strong>Giới tính</strong> 
-		        <label><input type="radio" name="gender" class="filter-gender" value="NAM"> Nam</label> 
-		        <label><input type="radio" name="gender" class="filter-gender" value="NU"> Nữ</label> 
-		        <label><input type="radio" name="gender" class="filter-gender" value="UNISEX"> Unisex</label>
-		        <label><input type="radio" name="gender" class="filter-gender" value="all" checked> Tất cả</label>
-		    </div>
-		
-		    <div class="filter-group">
-		        <strong>Khoảng giá</strong> 
-		        <label><input type="checkbox" class="filter-price" value="0-200000"> Dưới 200k</label> 
-		        <label><input type="checkbox" class="filter-price" value="200000-500000"> 200k - 500k</label> 
-		        <label><input type="checkbox" class="filter-price" value="500000-999999999"> Trên 500k</label>
-		    </div>
+			<h3>Thời trang thịnh hành</h3>
+			<h3>Lọc sản phẩm</h3>
+
+			<div class="filter-group">
+				<strong>Giới tính</strong>
+				<label><input type="radio" name="gender" class="filter-gender" value="NAM"> Nam</label>
+				<label><input type="radio" name="gender" class="filter-gender" value="NU"> Nữ</label>
+				<label><input type="radio" name="gender" class="filter-gender" value="UNISEX"> Unisex</label>
+				<label><input type="radio" name="gender" class="filter-gender" value="all" checked> Tất cả</label>
+			</div>
+
+			<div class="filter-group">
+				<strong>Khoảng giá</strong>
+				<label><input type="checkbox" class="filter-price" value="0-200000"> Dưới 200k</label>
+				<label><input type="checkbox" class="filter-price" value="200000-500000"> 200k - 500k</label>
+				<label><input type="checkbox" class="filter-price" value="500000-999999999"> Trên 500k</label>
+			</div>
 		</aside>
 
 		<!-- ================= PRODUCTS ================= -->
 		<section class="products">
-		    <div class="products-grid">
-		        <c:forEach items="${hotProducts}" var="p">
-		            <div class="product-card" 
-		                 data-type="${p.categoryName}" 
-		                 data-gender="${p.categoryName}" 
-		                 data-price="${p.price}">
-		                
-		                <div class="product-img">
-		                    <img src="${pageContext.request.contextPath}/assets/uploaded-images/${not empty p.imageUrl ? p.imageUrl : 'default.jpg'}" alt="${p.name}">
-		                    <div class="favorite btn-wishlist" data-id="${p.id}">
-							    <i class="fa-solid fa-heart"></i>
+			<div class="products-grid">
+				<c:forEach items="${hotProducts}" var="p">
+					<div class="product-card"
+						 data-type="${p.categoryName}"
+						 data-gender="${p.categoryName}"
+						 data-price="${p.price}">
+
+						<div class="product-img">
+							<img
+								src="${pageContext.request.contextPath}/assets/uploaded-images/${not empty p.imageUrl ? p.imageUrl : 'default.jpg'}"
+								alt="${p.name}">
+
+							<div class="favorite btn-wishlist" data-id="${p.id}">
+								<i class="fa-solid fa-heart"></i>
 							</div>
-		                </div>
-		                
-		                <div class="product-info">
-		                    <h4>${p.name}</h4>
-		                    <div class="price"><fmt:formatNumber value="${p.price}" pattern="#,###"/>đ</div>
-		                    
-		                    <div class="btn-group">
-		                        <button class="btn btn-cart add-to-cart-btn" data-id="${p.id}">
-								    <i class="fa-solid fa-cart-shopping"></i>
+						</div>
+
+						<div class="product-info">
+							<h4>${p.name}</h4>
+							<div class="price">
+								<fmt:formatNumber value="${p.price}" pattern="#,###" />đ
+							</div>
+
+							<div class="btn-group">
+								<button class="btn btn-cart add-to-cart-btn" data-id="${p.id}">
+									<i class="fa-solid fa-cart-shopping"></i>
 								</button>
-		                        <button class="btn btn-detail" type="button"
-		                            onclick="window.location.href='${pageContext.request.contextPath}/product-detail?id=${p.id}'">
-		                            Chi tiết
-		                        </button>
-		                    </div>
-		                </div>
-		            </div>
-		        </c:forEach>
-		    </div>
+
+								<button class="btn btn-detail" type="button"
+									onclick="window.location.href='${pageContext.request.contextPath}/product-detail?id=${p.id}'">
+									Chi tiết
+								</button>
+							</div>
+						</div>
+
+					</div>
+				</c:forEach>
+			</div>
 		</section>
 
 	</div>
+
 	<jsp:include page="/user-pages/footer.jsp" />
-	
-<script>
+
+	<script>
 document.addEventListener("DOMContentLoaded", function () {
     const filters = document.querySelectorAll('.filter-group input');
     const products = document.querySelectorAll(".product-card");
@@ -318,11 +295,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function filterProducts() {
-        // 1. Thu thập dữ liệu từ các bộ lọc
         const selectedTypes = Array.from(document.querySelectorAll(".filter-type:checked")).map(cb => cb.value);
         const selectedPrices = Array.from(document.querySelectorAll(".filter-price:checked")).map(cb => cb.value);
-        
-        // Lấy giá trị radio gender đang chọn
+
         const genderRadio = document.querySelector(".filter-gender:checked");
         const selectedGender = genderRadio ? genderRadio.value : "all";
 
@@ -331,25 +306,17 @@ document.addEventListener("DOMContentLoaded", function () {
             const pGender = product.getAttribute("data-gender");
             const pPrice = parseFloat(product.getAttribute("data-price"));
 
-            // Logic kiểm tra Loại (Nếu không chọn cái nào thì hiện tất cả)
             const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(pType);
-
-            // Logic kiểm tra Giới tính
             const genderMatch = selectedGender === "all" || pGender === selectedGender;
 
-            // Logic kiểm tra Giá
             let priceMatch = selectedPrices.length === 0;
             selectedPrices.forEach(range => {
                 const [min, max] = range.split("-").map(Number);
                 if (pPrice >= min && pPrice <= max) priceMatch = true;
             });
 
-            // HIỂN THỊ: Sản phẩm phải khớp TẤT CẢ các điều kiện (AND)
-            if (typeMatch && genderMatch && priceMatch) {
-                product.style.display = ""; 
-            } else {
-                product.style.display = "none";
-            }
+            if (typeMatch && genderMatch && priceMatch) product.style.display = "";
+            else product.style.display = "none";
         });
     }
 });

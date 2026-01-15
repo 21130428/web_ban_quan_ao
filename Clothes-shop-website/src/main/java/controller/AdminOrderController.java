@@ -19,7 +19,6 @@ import dao.OrderDao;
 @WebServlet("/admin-orders")
 public class AdminOrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

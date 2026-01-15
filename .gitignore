@@ -1,11 +1,23 @@
-# Build outputs
-/build/
-/target/
+# Java build
+target/
+build/
 *.class
 
-# Tomcat/Eclipse Servers
-Servers/
+# Eclipse
+.classpath
+.project
+.settings/
 
-# Nếu repo chứa project lồng trong folder Clothes-shop-website/
-Clothes-shop-website/build/
-Clothes-shop-website/target/
+# IntelliJ
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

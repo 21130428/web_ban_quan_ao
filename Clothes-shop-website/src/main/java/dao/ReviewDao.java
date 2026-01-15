@@ -28,7 +28,6 @@ public class ReviewDao {
 		}
 		return false;
 	}
-
 	// Lấy 5 đánh giá mới nhất của 1 sản phẩm
 	public List<Review> getTop5ReviewsByProductId(int productId) {
 		List<Review> list = new ArrayList<>();

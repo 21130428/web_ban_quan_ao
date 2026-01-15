@@ -167,49 +167,16 @@
 	
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).on('click', '.btn-cart', function(e) {
+$(document).on('click', '.btn-wishlist', function(e) {
     e.preventDefault();
-    var productId = $(this).attr('data-id'); // Đảm bảo dùng .attr('data-id') hoặc .data('id')
-    
-    if(!productId) {
-        console.error("Không tìm thấy ID sản phẩm trên nút này!");
+
+    var btn = $(this);
+    var productId = btn.attr('data-id') || btn.data('id');
+
+    if (!productId) {
+        console.error("Không tìm thấy data-id trên nút wishlist!");
         return;
     }
-
-    $.ajax({
-        // Dùng đường dẫn tuyệt đối từ gốc project
-        url: '${pageContext.request.contextPath}/cart-controller', 
-        type: 'GET',
-        data: {
-            action: 'add',
-            pid: productId
-        },
-        // Thêm dòng này để trình duyệt nhận diện đây là yêu cầu Ajax
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        },
-        success: function(response) {
-            alert('Đã thêm sản phẩm vào giỏ hàng thành công!');
-            // Cập nhật số lượng trên icon giỏ hàng nếu có
-            $('.cart-badge').text(response); 
-        },
-        error: function(xhr, status, error) {
-            console.error("Lỗi chi tiết:", status, error);
-            if(xhr.status === 401) {
-                alert('Vui lòng đăng nhập để thực hiện chức năng này!');
-                window.location.href = '${pageContext.request.contextPath}/user-pages/login.jsp';
-            } else {
-                alert('Có lỗi xảy ra (Mã lỗi: ' + xhr.status + '). Vui lòng thử lại!');
-            }
-        }
-    });
-});
-</script>
-
-<script>
-$(document).on('click', '.btn-wishlist', function(e) {
-    var btn = $(this);
-    var productId = btn.data('id');
 
     $.ajax({
         url: '${pageContext.request.contextPath}/wishlist-controller',
@@ -218,9 +185,12 @@ $(document).on('click', '.btn-wishlist', function(e) {
             action: 'add',
             pid: productId
         },
+        // ✅ QUAN TRỌNG: để WishListController nhận ra đây là Ajax
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        },
         success: function(response) {
-            // Hiệu ứng đổi màu trái tim sang đỏ để người dùng biết đã thích thành công
-            btn.find('i').css('color', 'red'); 
+            btn.find('i').css('color', 'red');
             alert('Đã thêm vào danh sách yêu thích!');
         },
         error: function(xhr) {
@@ -228,7 +198,7 @@ $(document).on('click', '.btn-wishlist', function(e) {
                 alert('Vui lòng đăng nhập để sử dụng chức năng yêu thích!');
                 window.location.href = '${pageContext.request.contextPath}/user-pages/login.jsp';
             } else {
-                alert('Lỗi: Không thể thêm vào yêu thích.');
+                alert('Lỗi: Không thể thêm vào yêu thích. (Mã: ' + xhr.status + ')');
             }
         }
     });

@@ -19,55 +19,57 @@ import dao.ProductDao;
  */
 @WebServlet("/wishlist-controller")
 public class WishListController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public WishListController() {
-        super();
-        // TODO Auto-generated constructor stub
+
+    private boolean isAjax(HttpServletRequest req) {
+        return "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        String action = request.getParameter("action");
-        String isAjax = request.getHeader("X-Requested-With");
+    private Integer tryParseInt(String s) {
+        try { return Integer.parseInt(s); } catch (Exception e) { return null; }
+    }
 
-        // 1. Kiểm tra đăng nhập
+    private void unauthorized(HttpServletRequest req, HttpServletResponse resp, boolean ajax) throws IOException {
+        if (ajax) { resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED); return; }
+        resp.sendRedirect(req.getContextPath() + "/user-pages/login.jsp");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        boolean ajax = isAjax(req);
+
+        String action = req.getParameter("action");
+        if (action == null) action = "view";
+
         if (user == null) {
-            if ("XMLHttpRequest".equals(isAjax)) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            } else {
-                response.sendRedirect("user-pages/login.jsp");
-            }
+            unauthorized(req, resp, ajax);
             return;
         }
 
         ProductDao dao = new ProductDao();
-        int pid = (request.getParameter("pid") != null) ? Integer.parseInt(request.getParameter("pid")) : 0;
 
-        // 2. Xử lý các hành động
-        if ("add".equals(action)) {
-            dao.addToWishlist(user.getUserId(), pid);
-            if ("XMLHttpRequest".equals(isAjax)) {
-                response.getWriter().write("Success");
+        if ("add".equals(action) || "delete".equals(action)) {
+            Integer pid = tryParseInt(req.getParameter("pid"));
+            if (pid == null) { resp.sendError(400, "Missing/invalid pid"); return; }
+
+            if ("add".equals(action)) dao.addToWishlist(user.getUserId(), pid);
+            else dao.removeFromWishlist(user.getUserId(), pid);
+
+            if (ajax) {
+                resp.setContentType("text/plain; charset=UTF-8");
+                resp.getWriter().write("OK");
                 return;
             }
-        } 
-        else if ("delete".equals(action)) {
-            dao.removeFromWishlist(user.getUserId(), pid);
+
+            // không ajax: quay về wishlist
+            resp.sendRedirect(req.getContextPath() + "/wishlist-controller?action=view");
+            return;
         }
 
-        // 3. Sau khi xử lý xong (nếu không phải Ajax) thì quay về trang wishlist
+        // view
         List<Product> list = dao.getWishlist(user.getUserId());
-        request.setAttribute("wishlist", list);
-        request.getRequestDispatcher("user-pages/wish-list.jsp").forward(request, response);
+        req.setAttribute("wishlist", list);
+        req.getRequestDispatcher("user-pages/wish-list.jsp").forward(req, resp);
     }
 }
-
